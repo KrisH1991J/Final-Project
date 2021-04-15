@@ -14,7 +14,7 @@ export const Home = () => {
 			</p>
 			<div className="alert alert-info">{store.message || "Loading message from the backend..."}</div>
 			<p>
-				This boilerplate comes with lots of documentation:{" "}
+				Diego Rodriguez{" "}
 				<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
 					Read documentation
 				</a>
