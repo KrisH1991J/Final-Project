@@ -1,8 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
+import sys
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine
 
 db = SQLAlchemy()
 
 class User(db.Model):
+    _tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -10,6 +16,7 @@ class User(db.Model):
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    user_user_has_products = db.relationship('User_Has_Products', backref='u_uhp')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -24,12 +31,16 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
+
 class Products(db.Model):
+    __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(120), nullable=False)
     product_cost = db.Column(db.Integer)
     product_image = db.Column(db.String(250))
-    product_upc = db.Column(db.Integer)
+    product_upc = db.Column(db.Integer, unique = True, primary_key=True)
+    keepaAPI = db.relationship('keepaAPI', backref='keepaapi')
+    products_user_has_products = db.relationship('User_Has_Products', backref='p_uhp')
 
     def __repr__(self):
         return '<Products %r>' % self.product_name
@@ -43,26 +54,45 @@ class Products(db.Model):
             "product_upc": self.product_upc,
             # do not serialize the password, its a security breach
         }
+        
+class keepaAPI(db.Model):
+    __tablename__ = 'keepaapi'
+    id = db.Column(db.Integer, primary_key=True)
+    product_upc = db.Column(db.Integer, db.ForeignKey('products.product_upc'))
+    fba_fee = db.Column(db.Integer, unique = True)
+    amazon_price = db.Column(db.Integer, unique = True)
+    products = db.relationship("Products")
 
 class User_Has_Products(db.Model):
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, ForeignKey('products.id'))
-    user = db.relationship(User)
-    products = db.relationship(Products)
-
-class keepaAPI(db.Model):
+    __tablename__ = 'userhasproducts'
     id = db.Column(db.Integer, primary_key=True)
-    product_upc = db.Column(db.Integer, ForeignKey('products.product_upc'))
-    fba_fee = db.Column(db.Integer)
-    amazon_price = db.Column(db.Integer)
-    products = db.relationship(Products)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    user = db.relationship("User")
+    products = db.relationship("Products")
 
-class Profit(db.Model):
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    product_id = db.Column(db.Integer, ForeignKey('products.id'))
-    product_cost = db.Column(db.Integer, ForeignKey('products.product_cost'))
-    fba_fee = db.Column(db.Integer, ForeignKey('keepaAPI.fba_fee'))
-    amazon_price = db.Column(db.Integer, ForeignKey('keepaAPI.amazon_price'))
-    user = db.relationship(User)
-    products = db.relationship(Products)
-    keepaAPI = db.relationship(keepaAPI)
+    def __repr__(self):
+        return '<Products %r>' % self.product_name
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product_cost": self.product_cost,
+            "product_image": self.product_image,
+            "product_upc": self.product_upc,
+            # do not serialize the password, its a security breach
+        }
+
+
+
+# class Profit(db.Model):
+#     __tablename__ = 'profit'
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+#     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+#     product_cost = db.Column(db.Integer, db.ForeignKey('products.product_cost'))
+#     fba_fee = db.Column(db.Integer, db.ForeignKey('keepaAPI.fba_fee'))
+#     amazon_price = db.Column(db.Integer, db.ForeignKey('keepaAPI.amazon_price'))
+#     user = db.relationship(User)
+    
