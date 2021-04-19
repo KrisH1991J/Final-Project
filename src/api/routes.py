@@ -36,7 +36,7 @@ def signup():
     if email_exists is not None:
         raise APIException("That email already exists", status_code=400)
 
-    new_user = User(user_name=body["user_name"], first_name=body["first_name"], last_name=body["last_name"], email=body['email'], password=body['password'])
+    new_user = User(username=body["username"], first_name=body["first_name"], last_name=body["last_name"], email=body['email'], password=body['password'])
     db.session.add(new_user)
     db.session.commit()
     user_id = new_user.id

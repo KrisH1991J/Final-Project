@@ -81,11 +81,11 @@ class keepaAPI(db.Model):
             # do not serialize the password, its a security breach
         }
 
-# class Profit(db.Model):
-#     __tablename__ = 'profit'
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-#     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+class Profit(db.Model):
+    __tablename__ = 'profit'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
 #     product_cost = db.Column(db.Integer, db.ForeignKey('products.product_cost'))
 #     fba_fee = db.Column(db.Integer, db.ForeignKey('keepaAPI.fba_fee'))
 #     amazon_price = db.Column(db.Integer, db.ForeignKey('keepaAPI.amazon_price'))
