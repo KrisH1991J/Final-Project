@@ -70,9 +70,53 @@ def del_user(user_id):
 def get_users():
     user_query = User.query.all()
     all_users = list(map(lambda x: x.serialize(), user_query))
-    return jsonify(all_users), 200
+    return jsonify(results=all_users), 200
 
 @api.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = User.query.get(id)
     return jsonify(user.serialize()), 200
+
+@api.route('/products', methods=['GET'])
+def get_products():
+    product_query = Products.query.all()
+    all_products = list(map(lambda x: x.serialize(), product_query))
+    return jsonify(results=all_products), 200
+
+@api.route('/products/<int:products_id>', methods=['GET'])
+def get_person(products_id):
+    products = Products.query.get(id)
+    return jsonify(products.serialize()), 200
+
+@api.route('/userhasproducts', methods=['GET'])
+def get_userhasproducts():
+    userhasproducts_query = User_Has_Products.query.all()
+    all_userhasproducts = list(map(lambda x: x.serialize(), userhasproducts_query))
+    return jsonify(results=all_userhasproducts), 200
+
+@api.route('/userhasproducts/<int:user_id>', methods=['GET'])
+def get_userproducts(user_id):
+    userproducts = User_Has_Products.query.get(id)
+    return jsonify(userproducts.serialize()), 200
+
+@api.route('/keepaAPI', methods=['GET'])
+def get_keepaAPI():
+    keepaapi_query = keepaAPI.query.all()
+    all_keepaapi = list(map(lambda x: x.serialize(), keepaapi_query))
+    return jsonify(results=all_keepaapi), 200
+
+@api.route('/keepaAPI/<int:keepaapi_id>', methods=['GET'])
+def get_singleAPI(keepaapi_id):
+    singleKeepa = keepaAPI.query.get(id)
+    return jsonify(singleKeepa.serialize()), 200
+
+@api.route('/profit', methods=['GET'])
+def get_profit():
+    profit_query = Profit.query.all()
+    all_profit = list(map(lambda x: x.serialize(), profit_query))
+    return jsonify(results=all_profit), 200
+
+@api.route('/profit/<int:user_id>', methods=['GET'])
+def get_singleProfit(user_id):
+    profit = Profit.query.get(id)
+    return jsonify(profit.serialize()), 200
