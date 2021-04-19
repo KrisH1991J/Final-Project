@@ -35,7 +35,7 @@ class Products(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(120), nullable=False)
-    product_cost = db.Column(db.Integer, nullable=False)
+    product_cost = db.Column(db.Integer, unique=True, nullable=False)
     product_image = db.Column(db.String(250))
     product_upc = db.Column(db.Integer, unique=True, nullable=False)
     keepaAPI = db.relationship('keepaAPI', backref='keepaapi')
@@ -49,6 +49,7 @@ class Products(db.Model):
             "id": self.id,
             "product_name": self.product_name,
             "product_cost": self.product_cost,
+            "product_image": self.product_image,
             "product_upc": self.product_upc,
             # do not serialize the password, its a security breach
         }
@@ -58,8 +59,19 @@ class User_Has_Products(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-    user = db.relationship("User")
-    products = db.relationship("Products")
+    user = db.relationship(User)
+    products = db.relationship(Products)
+
+    def __repr__(self):
+        return '<User_Has_Products %r>' % self.user_id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product_id": self.product_id,
+            # do not serialize the password, its a security breach
+        }
 
 class keepaAPI(db.Model):
     __tablename__ = 'keepaapi'
@@ -67,7 +79,7 @@ class keepaAPI(db.Model):
     product_upc = db.Column(db.Integer, db.ForeignKey('products.product_upc'))
     fba_fee = db.Column(db.Integer, unique=True, nullable=False)
     amazon_price = db.Column(db.Integer, unique=True, nullable=False)
-    products = db.relationship("Products")
+    products = db.relationship(Products)
 
     def __repr__(self):
         return '<keepAPI %r>' % self.product_upc
@@ -86,8 +98,20 @@ class Profit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-#     product_cost = db.Column(db.Integer, db.ForeignKey('products.product_cost'))
-#     fba_fee = db.Column(db.Integer, db.ForeignKey('keepaAPI.fba_fee'))
-#     amazon_price = db.Column(db.Integer, db.ForeignKey('keepaAPI.amazon_price'))
-#     keepaAPI = db.relationship('keepaAPI', backref='keepaapi')
-#     products = db.relationship('Products', backref='products')
+    product_cost = db.Column(db.Integer, db.ForeignKey('products.product_cost'))
+    fba_fee = db.Column(db.Integer, db.ForeignKey('keepaapi.fba_fee'))
+    amazon_price = db.Column(db.Integer, db.ForeignKey('keepaapi.amazon_price'))
+
+    def __repr__(self):
+        return '<Profit %r>' % self.product_upc
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "product_id": self.product_id,
+            "product_cost": self.product_cost,
+            "fba_fee": self.fba_fee,
+            "amazon_price": self.amazon_price,
+            # do not serialize the password, its a security breach
+        }

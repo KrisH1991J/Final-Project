@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Products, User_Has_Products, keepaAPI
+from api.models import db, User, Products, User_Has_Products, keepaAPI, Profit
 from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
@@ -24,10 +24,10 @@ def signup():
     if body is None:
         raise APIException("You need to specify the request body as a json object", status_code=400)
 
-    user_name = body["user_name"]
-    user_name_exists = User.query.filter_by(user_name=user_name)
+    username = body["username"]
+    username_exists = User.query.filter_by(username=username)
 
-    if user_name is not None:
+    if username is not None:
         raise APIException("The username you have selected is already taken", status_code=400)
 
     email = body["email"]
