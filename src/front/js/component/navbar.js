@@ -1,17 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
 
-export const Navbar = () => {
+export const Navigation = () => {
 	return (
-		<nav className="navbar navbar-light bg-light mb-3">
-			<Link to="/">
-				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-			</Link>
-			<div className="ml-auto">
-				<Link to="/demo">
-					<button className="btn btn-primary">Check the Context in action</button>
-				</Link>
-			</div>
-		</nav>
+		<>
+			<Navbar bg="light" variant="light">
+				<Navbar.Brand href="#home">Navbar</Navbar.Brand>
+				<Nav className="mr-auto">
+					<Nav.Link href="#">
+						<Link to="/profile"> Profile </Link>
+					</Nav.Link>
+					<Nav.Link href="#">
+						<Link to="/products"> Products </Link>
+					</Nav.Link>
+
+					{/* <Nav.Link href="/products">Products</Nav.Link> */}
+				</Nav>
+				<Form inline>
+					<FormControl type="text" placeholder="Search" className="mr-sm-2" />
+					<Button variant="outline-primary">Search</Button>
+				</Form>
+			</Navbar>
+		</>
 	);
 };

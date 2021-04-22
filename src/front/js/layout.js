@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
-
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-
-import { Navbar } from "./component/navbar";
+import { Navigation } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Profile } from "./pages/profile";
+import { Products } from "./pages/products";
 
 //create your first component
 const Layout = () => {
@@ -20,10 +20,18 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
+					<Navigation />
 					<Switch>
 						<Route exact path="/">
 							<Home />
+						</Route>
+
+						<Route exact path="/products">
+							<Products />
+						</Route>
+
+						<Route exact path="/profile">
+							<Profile />
 						</Route>
 						<Route exact path="/demo">
 							<Demo />
