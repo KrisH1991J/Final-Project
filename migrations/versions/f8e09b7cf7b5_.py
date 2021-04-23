@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f85da112dea2
+Revision ID: f8e09b7cf7b5
 Revises: 
-Create Date: 2021-04-19 20:07:46.491337
+Create Date: 2021-04-23 15:42:20.800724
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f85da112dea2'
+revision = 'f8e09b7cf7b5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,18 +21,17 @@ def upgrade():
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('product_name', sa.String(length=120), nullable=False),
-    sa.Column('product_cost', sa.Integer(), nullable=False),
+    sa.Column('product_cost', sa.String(length=10), nullable=False),
     sa.Column('product_image', sa.String(length=250), nullable=True),
-    sa.Column('product_upc', sa.Integer(), nullable=False),
+    sa.Column('product_upc', sa.String(length=12), nullable=False),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('product_cost'),
     sa.UniqueConstraint('product_upc')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('username', sa.String(length=120), nullable=False),
+    sa.Column('username', sa.String(length=20), nullable=False),
     sa.Column('email', sa.String(length=120), nullable=False),
-    sa.Column('password', sa.String(length=80), nullable=False),
+    sa.Column('password', sa.String(length=20), nullable=False),
     sa.Column('first_name', sa.String(length=120), nullable=False),
     sa.Column('last_name', sa.String(length=120), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
@@ -42,13 +41,11 @@ def upgrade():
     )
     op.create_table('keepaapi',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('product_upc', sa.Integer(), nullable=True),
-    sa.Column('fba_fee', sa.Integer(), nullable=False),
-    sa.Column('amazon_price', sa.Integer(), nullable=False),
+    sa.Column('product_upc', sa.String(length=12), nullable=True),
+    sa.Column('fba_fee', sa.String(length=10), nullable=False),
+    sa.Column('amazon_price', sa.String(length=10), nullable=False),
     sa.ForeignKeyConstraint(['product_upc'], ['products.product_upc'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('amazon_price'),
-    sa.UniqueConstraint('fba_fee')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('userhasproducts',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -62,12 +59,11 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
-    sa.Column('product_cost', sa.Integer(), nullable=True),
-    sa.Column('fba_fee', sa.Integer(), nullable=True),
-    sa.Column('amazon_price', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['amazon_price'], ['keepaapi.amazon_price'], ),
-    sa.ForeignKeyConstraint(['fba_fee'], ['keepaapi.fba_fee'], ),
-    sa.ForeignKeyConstraint(['product_cost'], ['products.product_cost'], ),
+    sa.Column('keepaAPI_id', sa.Integer(), nullable=True),
+    sa.Column('product_cost', sa.String(length=10), nullable=False),
+    sa.Column('fba_fee', sa.String(length=10), nullable=False),
+    sa.Column('amazon_price', sa.String(length=10), nullable=False),
+    sa.ForeignKeyConstraint(['keepaAPI_id'], ['keepaapi.id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')

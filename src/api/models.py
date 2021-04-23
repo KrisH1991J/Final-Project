@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.schema import ForeignKeyConstraint, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
@@ -10,13 +11,12 @@ db = SQLAlchemy()
 class User(db.Model):
     _tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    password = db.Column(db.String(20), unique=False, nullable=False)
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    user_user_has_products = db.relationship('User_Has_Products', backref='u_uhp')
 
     def __repr__(self):
         return '<User %r>' % self.username
@@ -35,11 +35,9 @@ class Products(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     product_name = db.Column(db.String(120), nullable=False)
-    product_cost = db.Column(db.Integer, unique=True, nullable=False)
+    product_cost = db.Column(db.String(10), nullable=False)
     product_image = db.Column(db.String(250))
-    product_upc = db.Column(db.Integer, unique=True, nullable=False)
-    keepaAPI = db.relationship('keepaAPI', backref='keepaapi')
-    products_user_has_products = db.relationship('User_Has_Products', backref='p_uhp')
+    product_upc = db.Column(db.String(12), unique=True, nullable=False)
 
     def __repr__(self):
         return '<Products %r>' % self.product_name
@@ -60,7 +58,7 @@ class User_Has_Products(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     user = db.relationship(User)
-    products = db.relationship(Products)
+    product = db.relationship(Products)
 
     def __repr__(self):
         return '<User_Has_Products %r>' % self.user_id
@@ -68,17 +66,17 @@ class User_Has_Products(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "product_id": self.product_id,
+            "user" : self.user.serialize(),
+            "product" : self.product.serialize()
             # do not serialize the password, its a security breach
         }
 
 class keepaAPI(db.Model):
     __tablename__ = 'keepaapi'
     id = db.Column(db.Integer, primary_key=True)
-    product_upc = db.Column(db.Integer, db.ForeignKey('products.product_upc'))
-    fba_fee = db.Column(db.Integer, unique=True, nullable=False)
-    amazon_price = db.Column(db.Integer, unique=True, nullable=False)
+    product_upc = db.Column(db.String(12), db.ForeignKey('products.product_upc'))
+    fba_fee = db.Column(db.String(10), nullable=False)
+    amazon_price = db.Column(db.String(10), nullable=False)
     products = db.relationship(Products)
 
     def __repr__(self):
@@ -98,18 +96,23 @@ class Profit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
-    product_cost = db.Column(db.Integer, db.ForeignKey('products.product_cost'))
-    fba_fee = db.Column(db.Integer, db.ForeignKey('keepaapi.fba_fee'))
-    amazon_price = db.Column(db.Integer, db.ForeignKey('keepaapi.amazon_price'))
+    keepaAPI_id = db.Column(db.Integer, db.ForeignKey('keepaapi.id'))
+    product_cost = db.Column(db.String(10), nullable=False)
+    fba_fee = db.Column(db.String(10), nullable=False)
+    amazon_price = db.Column(db.String(10), nullable=False)
+    user = db.relationship(User)
+    products = db.relationship(Products)
+    keepaapi = db.relationship(keepaAPI)
 
     def __repr__(self):
-        return '<Profit %r>' % self.product_upc
+        return '<Profit %r>' % self.user_id
 
     def serialize(self):
         return {
             "id": self.id,
-            "user_id": self.user_id,
-            "product_id": self.product_id,
+            "user_id" : self.user_id,
+            "product_id" : self.product_id,
+            "keepaAPI_id" : self.keepaAPI_id,
             "product_cost": self.product_cost,
             "fba_fee": self.fba_fee,
             "amazon_price": self.amazon_price,

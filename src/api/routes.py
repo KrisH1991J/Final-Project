@@ -74,7 +74,7 @@ def get_users():
 
 @api.route('/user/<int:user_id>', methods=['GET'])
 def get_user(user_id):
-    user = User.query.get(id)
+    user = User.query.get(user_id)
     return jsonify(user.serialize()), 200
 
 @api.route('/products', methods=['GET'])
@@ -84,30 +84,30 @@ def get_products():
     return jsonify(results=all_products), 200
 
 @api.route('/products/<int:products_id>', methods=['GET'])
-def get_person(products_id):
-    products = Products.query.get(id)
+def get_singleProduct(products_id):
+    products = Products.query.get(products_id)
     return jsonify(products.serialize()), 200
 
 @api.route('/userhasproducts', methods=['GET'])
 def get_userhasproducts():
     userhasproducts_query = User_Has_Products.query.all()
-    all_userhasproducts = list(map(lambda x: x.serialize(), userhasproducts_query))
-    return jsonify(results=all_userhasproducts), 200
+    all_UHP = list(map(lambda x: x.serialize(), userhasproducts_query))
+    return jsonify(results=all_UHP), 200
 
-@api.route('/userhasproducts/<int:user_id>', methods=['GET'])
-def get_userproducts(user_id):
-    userproducts = User_Has_Products.query.get(id)
-    return jsonify(userproducts.serialize()), 200
+@api.route('/userhasproducts/<int:userhasproducts_id>', methods=['GET'])
+def get_singleUHP(userhasproducts_id):
+    singleUHP = User_Has_Products.query.get(userhasproducts_id)
+    return jsonify(singleUHP.serialize()), 200
 
-@api.route('/keepaAPI', methods=['GET'])
+@api.route('/keepaapi', methods=['GET'])
 def get_keepaAPI():
     keepaapi_query = keepaAPI.query.all()
     all_keepaapi = list(map(lambda x: x.serialize(), keepaapi_query))
     return jsonify(results=all_keepaapi), 200
 
-@api.route('/keepaAPI/<int:keepaapi_id>', methods=['GET'])
+@api.route('/keepaapi/<int:keepaapi_id>', methods=['GET'])
 def get_singleAPI(keepaapi_id):
-    singleKeepa = keepaAPI.query.get(id)
+    singleKeepa = keepaAPI.query.get(keepaapi_id)
     return jsonify(singleKeepa.serialize()), 200
 
 @api.route('/profit', methods=['GET'])
@@ -116,7 +116,7 @@ def get_profit():
     all_profit = list(map(lambda x: x.serialize(), profit_query))
     return jsonify(results=all_profit), 200
 
-@api.route('/profit/<int:user_id>', methods=['GET'])
-def get_singleProfit(user_id):
-    profit = Profit.query.get(id)
+@api.route('/profit/<int:profit_id>', methods=['GET'])
+def get_singleProfit(profit_id):
+    profit = Profit.query.get(profit_id)
     return jsonify(profit.serialize()), 200
