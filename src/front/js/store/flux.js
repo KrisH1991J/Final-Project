@@ -1,21 +1,55 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			isLoggedIn: false,
+			token: null
 		},
 		actions: {
+			loginUser: event => {
+				event.preventDefault();
+				const formElements = event.target.elements;
+				let params = {};
+				Array.prototype.slice.call(formElements, 0).map(el => {
+					console.log(el);
+					if (el.type !== "submit") {
+						params[el.name] = el.value;
+					}
+				});
+
+				fetch(process.env.BACKEND_URL + "/api/login", {
+					method: "POST",
+					mode: "cors",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					data: JSON.stringify(params)
+				})
+					.then(resp => resp.json())
+					.then(data => console.log(data))
+					.catch(error => console.log(error));
+			},
+			signupUser: event => {
+				event.preventDefault();
+				const formElements = event.target.elements;
+				let params = {};
+				Array.prototype.slice.call(formElements, 0).map(el => {
+					console.log(el);
+					if (el.type !== "submit") {
+						params[el.name] = el.value;
+					}
+				});
+				fetch(process.env.BACKEND_URL + "/api/signup", {
+					method: "POST",
+					mode: "cors",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					data: JSON.stringify(params)
+				})
+					.then(resp => resp.json())
+					.then(data => console.log(data))
+					.catch(error => console.log(error));
+			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

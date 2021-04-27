@@ -18,36 +18,33 @@ const Layout = () => {
 	const basename = process.env.BASENAME || "";
 
 	return (
-		<div className="d-flex flex-column h-100">
+		<div className="container-fluid">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<Navigation />
-					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/login">
-							<Login />
-						</Route>
+					<div className="container">
+						<Switch>
+							<Route exact path="/">
+								<Home />
+							</Route>
 
-						<Route exact path="/products">
-							<Products />
-						</Route>
+							<Route exact path="/products">
+								<Products />
+							</Route>
 
-						<Route exact path="/profile">
-							<Profile />
-						</Route>
-						<Route exact path="/demo">
-							<Demo />
-						</Route>
-						<Route exact path="/single/:theid">
-							<Single />
-						</Route>
-						<Route>
-							<h1>Not found!</h1>
-						</Route>
-					</Switch>
-					<Footer />
+							<Route exact path="/profile">
+								<Profile />
+							</Route>
+
+							<Route exact path="/single/:theid">
+								<Single />
+							</Route>
+							<Route>
+								<h1>Not found!</h1>
+							</Route>
+						</Switch>
+						<Footer />
+					</div>
 				</ScrollToTop>
 			</BrowserRouter>
 		</div>

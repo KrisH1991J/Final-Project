@@ -3,130 +3,81 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import Button from "react-bootstrap/Button";
 import "../../styles/home.scss";
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
-import Carousel from "react-bootstrap/Container";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<section className="home-top-section">
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-6 col-xl-5">
-							<h1 className="h1 headline home-top-section">
-								{" "}
-								Everything You Need to Sell on Amazon and More
-							</h1>
-							<h2 className="h2 headline home-top-section">
-								{" "}
-								Easily manage and grow a thriving eCommerce business with just one platform
-							</h2>
-							<Button variant="primary" href="/login">
-								Sign Up
-							</Button>{" "}
-						</div>
-						<div className="col-lg-6 col-xl-7">
-							<div className="animation home-top-section">
-								<Card style={{ width: "18rem" }}>
-									<Card.Img variant="top" src="" />
-								</Card>
-							</div>
-						</div>
-					</div>
+		<>
+			<div className="row mb-5">
+				<div className="col">
+					<h1 className="text-center">GURUPIA</h1>
 				</div>
-				<Container>
-					<h3 className="in-the-press-title">in the Press </h3>
-					<ul>
-						<li className="cnbc" style={{ listStyleType: "none" }}>
-							<img src="https://www.helium10.com/app/themes/helium10/assets/img/home-page/CNBC.svg" />
-						</li>
-						<li className="thenyt" style={{ listStyleType: "none" }}>
-							<img src="https://www.helium10.com/app/themes/helium10/assets/img/home-page/NYTimes.svg" />{" "}
-						</li>
-						<li className="Bloom">
-							<img src="https://www.helium10.com/app/themes/helium10/assets/img/home-page/Bloomberg.svg" />{" "}
-						</li>
-					</ul>
-				</Container>
-				<h2 className="section-title"> everithing you need</h2>
-				<section className="section">
-					<Container>
-						<div className="row align-items-center">
-							<div className="col-md-6">
-								<div className="image section">
-									<img src="https://www.helium10.com/app/themes/helium10/assets/img/home-page/helium-iso-2-01-01.svg" />
-								</div>
-							</div>
-							<div className="col-md-6">
-								<div className="section-content">
-									<h3 className="section__content__title">Powerful Product Research</h3>
-									<p className="section-content">Easily Find products to sell</p>
-								</div>
-							</div>
-						</div>
-					</Container>
-				</section>
-				<section className="section">
-					<Container>
-						<div className="row align-items-center">
-							<div className="col-md-6">
-								<div className="image section">
-									<img src="https://www.helium10.com/app/themes/helium10/assets/img/home-page/analytics-1.svg" />
-								</div>
-							</div>
-						</div>
-						<div className="col-md-6">
-							<div className="section__content padding-left">
-								<h3 className="section__content__title">Analytics that Power Decision-Making</h3>
-								<p className="section-content">Easily Find products to sell</p>
-							</div>
-						</div>
-					</Container>
-				</section>
-				<h2 className="subtitle"> You can be the next Amazon Pro Seller</h2>
-				<section className="review-slider">
-					<Container>
-						{/* <Carousel>
-							<Carousel.Item interval={1000}>
-								<img
-									className="d-block w-100"
-									src="holder.js/800x400?text=First slide&bg=373940"
-									alt="First slide"
-								/>
-								<Carousel.Caption>
-									<h3>First slide label</h3>
-									<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-								</Carousel.Caption>
-							</Carousel.Item>
-							<Carousel.Item interval={500}>
-								<img
-									className="d-block w-100"
-									src="holder.js/800x400?text=Second slide&bg=282c34"
-									alt="Second slide"
-								/>
-								<Carousel.Caption>
-									<h3>Second slide label</h3>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-								</Carousel.Caption>
-							</Carousel.Item>
-							<Carousel.Item>
-								<img
-									className="d-block w-100"
-									src="holder.js/800x400?text=Third slide&bg=20232a"
-									alt="Third slide"
-								/>
-								<Carousel.Caption>
-									<h3>Third slide label</h3>
-									<p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-								</Carousel.Caption>
-							</Carousel.Item>
-						</Carousel> */}
-					</Container>
-				</section>
-			</section>
-		</div>
+			</div>
+			<div className="row">
+				<div className="col">
+					<h2>Everything You Need to Sell on Amazon and More</h2>
+					<h4>Easily manage and grow a thriving e-commerce business with just one platform.</h4>
+				</div>
+				<div className="col">
+					<Tabs defaultActiveKey="login" id="log_reg_screen">
+						<Tab eventKey="login" title="Login">
+							<Form onSubmit={actions.loginUser}>
+								<Form.Group controlId="formBasicEmail">
+									<Form.Label>Email address</Form.Label>
+									<Form.Control name="email" type="email" placeholder="Enter email" />
+								</Form.Group>
+
+								<Form.Group controlId="formBasicPassword">
+									<Form.Label>Password</Form.Label>
+									<Form.Control name="password" type="password" placeholder="Password" />
+								</Form.Group>
+
+								<Button variant="primary" type="submit">
+									Submit
+								</Button>
+							</Form>
+						</Tab>
+						<Tab eventKey="signup" title="Sign Up">
+							<Form onSubmit={actions.signupUser}>
+								<Form.Row>
+									<Form.Group as={Col} controlId="formGridEmail">
+										<Form.Label>Email</Form.Label>
+										<Form.Control type="email" placeholder="Enter email" name="email" />
+									</Form.Group>
+
+									<Form.Group as={Col} controlId="formGridPassword">
+										<Form.Label>Password</Form.Label>
+										<Form.Control type="password" placeholder="Password" name="password" />
+									</Form.Group>
+								</Form.Row>
+								<Form.Group controlId="formUsername">
+									<Form.Label>Username</Form.Label>
+									<Form.Control placeholder="User123" name="username" />
+								</Form.Group>
+
+								<Form.Group controlId="formFirstName">
+									<Form.Label>First Name</Form.Label>
+									<Form.Control placeholder="Your name" name="firstname" />
+								</Form.Group>
+
+								<Form.Group controlId="formLastName">
+									<Form.Label>Last Name</Form.Label>
+									<Form.Control placeholder="Last Name" name="lastname" />
+								</Form.Group>
+
+								<Button variant="primary" type="submit">
+									Submit
+								</Button>
+							</Form>
+						</Tab>
+					</Tabs>
+				</div>
+			</div>
+		</>
 	);
 };
