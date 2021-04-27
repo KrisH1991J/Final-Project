@@ -57,17 +57,20 @@ def signup():
     access_token = create_access_token(identity=user_id)
     return jsonify(access_token=access_token), 200
 
-@api.route("/login", methods=["GET", "POST"])
-@jwt_required()
+@api.route("/login", methods=["POST"])
 def user_login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
-    user = User.query.filter_by(email=email, password=password).first
+    user = User.query.filter_by(email=email, password=password).first()
 
     if user is None:
         raise APIException("Bad email or password", status_code=400)
 
-    current_user = get_jwt_identity()
+    # current_user = get_jwt_identity()
+    #if the user exists, then create the new access token and return access token 
+    user_id = user.id
+    access_token = create_access_token(identity=user_id)
+    return jsonify(access_token=access_token), 200
     return jsonify(logged_in_as=current_user), 200
 
 @api.route("/user/delete/<int:user_id>", methods=["DELETE"])

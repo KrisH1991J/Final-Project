@@ -10,7 +10,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const formElements = event.target.elements;
 				let params = {};
 				Array.prototype.slice.call(formElements, 0).map(el => {
-					console.log(el);
 					if (el.type !== "submit") {
 						params[el.name] = el.value;
 					}
@@ -18,7 +17,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				fetch(process.env.BACKEND_URL + "/api/login", {
 					method: "POST",
-					mode: "cors",
 					headers: {
 						"Content-Type": "application/json"
 					},
@@ -26,21 +24,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(resp => resp.json())
 					.then(data => console.log(data))
-					.catch(error => console.log(error));
+					.catch(error => console.log("Error => ", error));
 			},
 			signupUser: event => {
 				event.preventDefault();
 				const formElements = event.target.elements;
 				let params = {};
 				Array.prototype.slice.call(formElements, 0).map(el => {
-					console.log(el);
 					if (el.type !== "submit") {
 						params[el.name] = el.value;
 					}
 				});
 				fetch(process.env.BACKEND_URL + "/api/signup", {
 					method: "POST",
-					mode: "cors",
 					headers: {
 						"Content-Type": "application/json"
 					},
