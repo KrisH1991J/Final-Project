@@ -36,12 +36,12 @@ const Layout = () => {
 								<Profile />
 							</Route>
 
-							<Route exact path="/single/:theid">
+							<Route exact path="/single/:productId">
 								<Single />
 							</Route>
-							<Route>
+							{/* <Route>
 								<h1>Not found!</h1>
-							</Route>
+							</Route> */}
 						</Switch>
 						<Footer />
 					</div>

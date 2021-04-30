@@ -15,7 +15,7 @@ export const Navigation = () => {
 			{store.isLoggedIn && (
 				<Navbar bg="light" variant="light">
 					{/** Mostrar solo cuando usuario este logged in */}
-					<Navbar.Brand href="#home">GURUPIA</Navbar.Brand>
+					<Navbar.Brand href="#home">MARKETPULSE</Navbar.Brand>
 					{/* <Nav className="mr-auto">
 					<Nav.Link href="#">
 						<Link to="/profile"> Profile </Link>
