@@ -9,27 +9,11 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 
 api = Blueprint('api', __name__)
 
-
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend"
-#     }
-
-#     return jsonify(response_body), 200
-
-# @api.route("/create-token", methods=["POST"])
-# def login():
-#     user_id = 1
-#     access_token = create_access_token(identity=user_id)
-#     return jsonify(access_token=access_token)
-
-# @api.route("/protected", methods=["GET"])
-# @jwt_required()
-# def protected():
-#     current_user = get_jwt_identity()
-#     return jsonify(logged_in_as=current_user), 200
+@api.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user), 200
 
 @api.route("/signup", methods=["POST"])
 def signup():
@@ -66,12 +50,10 @@ def user_login():
     if user is None:
         raise APIException("Bad email or password", status_code=400)
 
-    # current_user = get_jwt_identity()
     #if the user exists, then create the new access token and return access token 
     user_id = user.id
     access_token = create_access_token(identity=user_id)
     return jsonify(access_token=access_token), 200
-    return jsonify(logged_in_as=current_user), 200
 
 @api.route("/user/delete/<int:user_id>", methods=["DELETE"])
 def del_user(user_id):
@@ -96,6 +78,23 @@ def get_user(user_id):
 
 @api.route('/products', methods=['GET'])
 def get_products():
+    product_query = Products.query.all()
+    all_products = list(map(lambda x: x.serialize(), product_query))
+    return jsonify(results=all_products), 200
+
+@api.route('/products/make', methods=['POST'])
+def make_product():
+    body = request.get_json()
+
+    product_upc = body["product_upc"]
+    upc_exists = Products.query.filter_by(product_upc=product_upc)
+
+    if product_upc is None:
+        raise APIException("That upc code has already been used", status_code=400)
+
+    new_product = Products(product_name=body['product_name'], product_cost=body['product_cost'], product_image=body['product_image'], product_upc=product_upc)
+    db.session.add(new_product)
+    db.session.commit()
     product_query = Products.query.all()
     all_products = list(map(lambda x: x.serialize(), product_query))
     return jsonify(results=all_products), 200

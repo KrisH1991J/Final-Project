@@ -3,6 +3,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+
 export const UserProducts = props => {
 	return (
 		<>
@@ -17,17 +18,17 @@ export const UserProducts = props => {
 			) : (
 				props.products.map(product => (
 					<Card key={product.id} style={{ width: "18rem" }}>
-						<Card.Img variant="top" src="holder.js/100px180" />
+						<Card.Img variant="top" src={product.product_image} />
 						<Card.Body>
-							<Card.Title>{product.name}</Card.Title>
+							<Card.Title>{product.product_name}</Card.Title>
 							<Card.Text>{product.brand}</Card.Text>
 							<Card.Text>{product.price}</Card.Text>
 							<Link
 								to={{
-									pathname: `/single/:${product.id}`,
+									pathname: `/single/${props.theid}`,
 									state: { product: product }
 								}}>
-								<Button variant="primary">Go somewhere</Button>
+								<Button variant="danger">Go somewhere</Button>
 							</Link>
 						</Card.Body>
 					</Card>
