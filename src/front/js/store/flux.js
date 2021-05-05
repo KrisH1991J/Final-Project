@@ -40718,10 +40718,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-				// console.log("URL: ", process.env.BACKEND_URL + "/api/login");
-				// https://3001-olive-mouse-fbezqswm.ws-us03.gitpod.io//api/login
-				fetch("https://3001-olive-mouse-fbezqswm.ws-us03.gitpod.io/api/login", {
-					// fetch(process.env.BACKEND_URL + "/api/login", {
+
+				fetch(process.env.BACKEND_URL + "api/login", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -40735,6 +40733,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return resp.json();
 					})
 					.then(data => {
+						setStore({ isLoggedIn: true });
 						setStore({ token: data.access_token });
 						localStorage.setItem("token", data.access_token);
 						history.push("/profile");
@@ -40742,7 +40741,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log("Error => ", error));
 				console.log(params);
 			},
-			signupUser: event => {
+			signupUser: (event, history) => {
 				event.preventDefault();
 				const formElements = event.target.elements;
 				let params = {};
@@ -40752,19 +40751,77 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-
-				fetch(process.env.BACKEND_URL + "/api/signup", {
+				fetch(process.env.BACKEND_URL + "api/signup", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
 						"Content-Type": "application/json"
 					}
 				})
-					.then(resp => resp.json())
-					.then(data => console.log(data))
+					.then(resp => {
+						if (!resp.ok) {
+							throw Error(resp.statusText);
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ isLoggedIn: true });
+						setStore({ token: data.access_token });
+						localStorage.setItem("token", data.access_token);
+						history.push("/profile");
+					})
 					.catch(error => console.log("Error =>", error));
 
 				console.log(params);
+			},
+			getCurrentUser: () => {
+				const token = localStorage.getItem("token");
+				console.log(token);
+				fetch(process.env.BACKEND_URL + "api/protected", {
+					method: "GET",
+					headers: { Authorization: "Bearer " + token }
+				});
+			},
+			makeProduct: (event, history) => {
+				event.preventDefault();
+				const formElements = event.target.elements;
+				let params = {};
+
+				Array.prototype.slice.call(formElements, 0).map(el => {
+					if (el.type !== "submit") {
+						params[el.name] = el.value;
+					}
+				});
+				fetch(process.env.BACKEND_URL + "api/products/make", {
+					method: "POST",
+					body: JSON.stringify(params),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						if (!resp.ok) {
+							throw Error(resp.statusText);
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ products: data.results });
+						history.push("/profile");
+					})
+					.catch(error => console.log("Error =>", error));
+
+				console.log(params);
+			},
+			loadProducts: () => {
+				fetch(process.env.BACKEND_URL + "api/products")
+					.then(resp => resp.json())
+					.then(data => setStore({ products: data.results }));
+			},
+			loadUsers: () => {
+				fetch(process.env.BACKEND_URL + "api/user")
+					.then(resp => resp.json())
+					.then(data => setStore({ users: data.results }));
 			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {

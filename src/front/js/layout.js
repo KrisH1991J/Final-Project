@@ -5,9 +5,9 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
-import { Navigation } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { Profile } from "./pages/profile";
+import { MakeProduct } from "./pages/makeProduct";
 import { Products } from "./pages/products";
 import { Login } from "./pages/login";
 import { SingleProduct } from "./pages/singleProduct";
@@ -22,22 +22,18 @@ const Layout = () => {
 		<div className="container-fluid">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navigation />
 					<div className="container">
 						<Switch>
 							<Route exact path="/">
 								<Home />
 							</Route>
-
 							<Route exact path="/products">
 								<Products />
 							</Route>
-
 							<Route exact path="/profile">
 								<Profile />
 							</Route>
-
-							<Route exact path="/single/:productId">
+							<Route exact path="/single/:id">
 								<Single />
 							</Route>
 							<Route exact path="/singleProduct">

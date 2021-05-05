@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import Button from "react-bootstrap/Button";
 import "../../styles/home.scss";
 import Tabs from "react-bootstrap/Tabs";
@@ -9,7 +8,8 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-export const Home = () => {
+
+export const Home = props => {
 	const { store, actions } = useContext(Context);
 	let history = useHistory();
 
@@ -53,25 +53,22 @@ export const Home = () => {
 									<Form.Label>Email address</Form.Label>
 									<Form.Control name="email" type="email" placeholder="Enter email" />
 								</Form.Group>
-
 								<Form.Group controlId="formBasicPassword">
 									<Form.Label>Password</Form.Label>
 									<Form.Control name="password" type="password" placeholder="Password" />
 								</Form.Group>
-
-								<Button variant="primary" type="submit">
-									Submit
+								<Button variant="danger" type="submit">
+									Login
 								</Button>
 							</Form>
 						</Tab>
 						<Tab eventKey="signup" title="Sign Up">
-							<Form onSubmit={actions.signupUser}>
+							<Form onSubmit={event => actions.signupUser(event, history)}>
 								<Form.Row>
 									<Form.Group as={Col} controlId="formGridEmail">
 										<Form.Label>Email</Form.Label>
 										<Form.Control type="email" placeholder="Enter email" name="email" />
 									</Form.Group>
-
 									<Form.Group as={Col} controlId="formGridPassword">
 										<Form.Label>Password</Form.Label>
 										<Form.Control type="password" placeholder="Password" name="password" />
@@ -81,18 +78,15 @@ export const Home = () => {
 									<Form.Label>Username</Form.Label>
 									<Form.Control placeholder="User123" name="username" />
 								</Form.Group>
-
 								<Form.Group controlId="formFirstName">
 									<Form.Label>First Name</Form.Label>
 									<Form.Control placeholder="Your name" name="first_name" />
 								</Form.Group>
-
 								<Form.Group controlId="formLastName">
 									<Form.Label>Last Name</Form.Label>
 									<Form.Control placeholder="Last Name" name="last_name" />
 								</Form.Group>
-
-								<Button variant="primary" type="submit">
+								<Button variant="danger" type="submit">
 									Submit
 								</Button>
 							</Form>
