@@ -9,10 +9,30 @@ import FormControl from "react-bootstrap/FormControl";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import InputGroup from "react-bootstrap/InputGroup";
+import Carousel from "react-bootstrap/Carousel";
+
 export const Single = props => {
 	const { store, actions } = useContext(Context);
+	const [cost, setCost] = useState();
+	const [totalProfit, setTotalProfit] = useState(0);
 	const params = useParams();
-
+	console.log(params);
+	// const words = str.split(',');
+	const imagesArray = store.fakeProduct.products[0].imagesCSV.split(",");
+	console.log("images: ", imagesArray);
+	useEffect(
+		() => {
+			const profit = () => {
+				let price = store.fakeProduct.products[0].stats.current[1] / 100;
+				let fba = store.fakeProduct.products[0].fbaFees.pickAndPackFee / 100;
+				let storage = store.fakeProduct.products[0].fbaFees.storageFee / 100;
+				let costFee = fba + storage + parseInt(cost);
+				setTotalProfit(price - costFee);
+			};
+			profit();
+		},
+		[cost]
+	);
 	return (
 		<div>
 			<Navbar bg="primary" variant="dark">
@@ -27,35 +47,90 @@ export const Single = props => {
 			<div className="card mb-3" style={{ maxWidth: "1150px" }}>
 				<div className="row g-0">
 					<div className="col-md-8">
-						<img
-							src="https://static.highsnobiety.com/thumbor/fIuRY1m-OfEfs7LvmjQzgYHHAX0=/1600x1067/static.highsnobiety.com/wp-content/uploads/2021/02/12163548/air-jordan-1-university-blue-release-info-02.jpg"
-							style={{ height: "500px" }}
-						/>
+						{/* <img
+							src="https://images-na.ssl-images-amazon.com/images/I/41HJnZ7UjbL.jpg"
+							style={{ height: "300px" }}
+						/> */}
+						<Carousel>
+							{/* {store.fakeProduct.products[0].imageCSV(item, index) =>  */}
+							{imagesArray.map((eachImage, eachIndex) => {
+								return (
+									<Carousel.Item key={eachIndex}>
+										<img
+											className="d-block w-100"
+											src={`https://images-na.ssl-images-amazon.com/images/I/${eachImage}`}
+											alt="First slide"
+											width="100%"
+											height="500px"
+										/>
+										<Carousel.Caption>
+											<h3>{store.fakeProduct.products[0].manufacturer}</h3>
+										</Carousel.Caption>
+									</Carousel.Item>
+								);
+							})}
+						</Carousel>
+						<div>
+							{" "}
+							<p className="card-text">{store.fakeProduct.products[0].description}</p>
+						</div>
 					</div>
 
-					<div className="col-md-4">
+					<div className="card ">
 						<div className="card-body">
-							<h5 className="card-title"> Product Name </h5>
-							<h5 className="text-muted"> 19990490 </h5>
+							<h3 className="card-title"> {store.fakeProduct.products[0].title} </h3>
+							<h6 className="text-muted">
+								{" "}
+								UPC
+								{store.fakeProduct.products[0].upcList}{" "}
+							</h6>
+							<h6 className="text-muted">
+								{" "}
+								ASIN
+								{store.fakeProduct.products[0].asin}{" "}
+							</h6>
 							<div className="row g-0">
-								<div className="col-md-8">
-									<InputGroup className="mb-3">
-										<InputGroup.Prepend>
-											<InputGroup.Text>Cost</InputGroup.Text> <InputGroup.Text>$</InputGroup.Text>
-										</InputGroup.Prepend>
-										<FormControl aria-label="Amount (to the nearest dollar)" />
-									</InputGroup>
+								<div className="col-md-10">
+									<div className="row">
+										<h5 className="text-muted"> Price: </h5>{" "}
+										<h5>
+											{`$${store.fakeProduct.products[0].stats.current[1] / 100}`}{" "}
+											<img
+												src="https://www.webretailer.com/wp-content/uploads/2019/04/2.-Amazon-Prime-badge.png"
+												style={{ height: "20px" }}
+											/>
+										</h5>
+									</div>
+									<div className="row">
+										<h5 className="text-muted"> FBA Fee: </h5>{" "}
+										<h5>{store.fakeProduct.products[0].fbaFees.pickAndPackFee / 100}</h5>
+									</div>
+									<div className="row">
+										<h5 className="text-muted"> Storage Fee: </h5>{" "}
+										<h5>{store.fakeProduct.products[0].fbaFees.storageFee / 100}</h5>
+									</div>
+
+									{/* <h1>{store.fakeProduct.products[0].price}</h1> */}
 								</div>
 							</div>
-							<p className="card-text">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque ut dignissim nunc, id
-								ultricies erat. Sed cursus eros a diam dapibus gravida. Nunc ac fermentum ex, sed porta
-								risus.
-							</p>
-							<p className="card-text">
-								<small className="text-muted">Last updated 3 mins ago</small>
-							</p>
+							<div className="col-md-8">
+								<InputGroup className="mb-3">
+									<InputGroup.Prepend>
+										<InputGroup.Text>Cost</InputGroup.Text>
+									</InputGroup.Prepend>
+									<FormControl
+										aria-label="Amount (to the nearest dollar)"
+										onChange={e => setCost(e.target.value)}
+									/>
+								</InputGroup>
+							</div>
+							{/* (fbafee + storagefee + cost) - price */}
+							<div>{totalProfit}</div>
 						</div>
+
+						<p className="card-text">
+							<small className="text-muted">Last updated 3 mins ago</small>
+						</p>
 					</div>
 				</div>
 			</div>

@@ -1,3 +1,33 @@
 /* 
     General Styles
 */
+.product-column {
+  float: left;
+  width: 50%;
+  padding: 1px;
+ 
+}
+
+.prime {
+    float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px;
+}
+
+.product-detail-row {
+ 
+  padding: 10px;
+
+
+}
+
+.calculator-title {
+    display: flex;
+    justify-content: center;
+}
+.rank {
+    display: flex;
+    justify-content: center;
+    color: blue;
+}

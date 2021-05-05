@@ -24,8 +24,7 @@ export const UserProducts = props => {
 							<Card.Text>{product.price}</Card.Text>
 							<Link
 								to={{
-									pathname: `/single/:${product.id}`,
-									state: { product: product }
+									pathname: `/single/${product.id}`
 								}}>
 								<Button variant="primary">Go somewhere</Button>
 							</Link>

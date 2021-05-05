@@ -7,9 +7,11 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-
+import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	let history = useHistory();
 
 	return (
 		<>
@@ -46,7 +48,7 @@ export const Home = () => {
 				<div className="col-md">
 					<Tabs defaultActiveKey="login" id="log_reg_screen">
 						<Tab eventKey="login" title="Login">
-							<Form onSubmit={actions.loginUser}>
+							<Form onSubmit={event => actions.loginUser(event, history)}>
 								<Form.Group controlId="formBasicEmail">
 									<Form.Label>Email address</Form.Label>
 									<Form.Control name="email" type="email" placeholder="Enter email" />
@@ -110,4 +112,8 @@ export const Home = () => {
 			</div>
 		</>
 	);
+};
+
+Home.propTypes = {
+	history: PropTypes.object
 };
