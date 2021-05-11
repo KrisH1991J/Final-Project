@@ -1,9 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -13,14 +10,6 @@ import PropTypes from "prop-types";
 export const MakeProduct = props => {
 	const { store, actions } = useContext(Context);
 	let history = useHistory();
-
-	const navStyles = {
-		marginLeft: "175px"
-	};
-
-	const searchStyles = {
-		marginLeft: "175px"
-	};
 
 	const formStyles = {
 		width: "410px",
@@ -36,27 +25,6 @@ export const MakeProduct = props => {
 
 	return (
 		<div>
-			<Navbar bg="dark" variant="dark">
-				<Navbar.Brand>MarketPulse</Navbar.Brand>
-				<Nav className="mr-auto" />
-				<Form inline style={searchStyles}>
-					<FormControl type="text" placeholder="Find Products" className="mr-sm-2" />
-					<Button variant="outline-danger">Search</Button>
-				</Form>
-				<Nav className="mr-auto">
-					<Nav.Link href="/makeProduct" style={navStyles}>
-						Add Product
-					</Nav.Link>
-					<Nav.Link href="/products">View All Products</Nav.Link>
-					<NavDropdown title="Profile" id="collasible-nav-dropdown">
-						<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-						<NavDropdown.Divider />
-						<NavDropdown.Item href="/">Logout</NavDropdown.Item>
-					</NavDropdown>
-				</Nav>
-			</Navbar>
 			<div className="card mb-3" style={{ maxWidth: "700px", marginTop: "30px" }}>
 				<div className="row g-0">
 					<div className="col-md-8">

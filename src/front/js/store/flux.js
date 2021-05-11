@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			isLoggedIn: false,
 			token: null || localStorage.getItem("token"),
-			userHasProducts: true,
+			userHasProducts: [],
 			products: [],
 			fakeProduct: {
 				timestamp: 1620177246272,
@@ -40707,7 +40707,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.log(error));
 			},
-
 			loginUser: (event, history) => {
 				event.preventDefault();
 				console.log(history);
@@ -40741,6 +40740,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log("Error => ", error));
 				console.log(params);
 			},
+			logoutUser: () => {
+				localStorage.removeItem("token");
+			},
 			signupUser: (event, history) => {
 				event.preventDefault();
 				const formElements = event.target.elements;
@@ -40773,6 +40775,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.log("Error =>", error));
 
 				console.log(params);
+			},
+			checkSession: () => {
+				const store = getStore();
+				if (store.token !== null) setStore({ isLoggedIn: true });
+				if (store.token === null) setStore({ isLoggedIn: false });
 			},
 			getCurrentUser: () => {
 				const token = localStorage.getItem("token");
@@ -40822,6 +40829,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch(process.env.BACKEND_URL + "api/user")
 					.then(resp => resp.json())
 					.then(data => setStore({ users: data.results }));
+			},
+			loadUserProducts: () => {
+				fetch(process.env.BACKEND_URL + "api/userhasproducts")
+					.then(resp => resp.json())
+					.then(data => setStore({ userHasProducts: data.results }));
 			},
 			// Use getActions to call a function within a fuction
 			exampleFunction: () => {
