@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { Footer } from "./component/footer";
 import { Profile } from "./pages/profile";
@@ -11,6 +10,8 @@ import { MakeProduct } from "./pages/makeProduct";
 import { Products } from "./pages/products";
 import { Login } from "./pages/login";
 import { SingleProduct } from "./pages/singleProduct";
+import { Navigation } from "./component/navbar";
+import { Settings } from "./pages/settings";
 
 //create your first component
 const Layout = () => {
@@ -23,6 +24,7 @@ const Layout = () => {
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
 					<div className="container">
+						<Navigation />
 						<Switch>
 							<Route exact path="/">
 								{/* <Home /> */}
@@ -37,18 +39,12 @@ const Layout = () => {
 							<Route exact path="/profile">
 								<Profile />
 							</Route>
-							<Route exact path="/single/:id">
-								<Single />
-							</Route>
 							<Route exact path="/singleProduct">
 								<SingleProduct />
 							</Route>
 							<Route exact path="/makeProduct">
 								<MakeProduct />
 							</Route>
-							{/* <Route>
-								<h1>Not found!</h1>
-							</Route> */}
 						</Switch>
 						<Footer />
 					</div>

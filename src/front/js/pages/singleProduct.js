@@ -6,8 +6,6 @@ import rigoImageUrl from "../../img/rigo-baby.jpg";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import InputGroup from "react-bootstrap/InputGroup";
 import Carousel from "react-bootstrap/Carousel";
 import Card from "react-bootstrap/Card";
@@ -64,15 +62,6 @@ export const SingleProduct = props => {
 	return amzData ? (
 		<div className="product-body">
 			<section className="product">
-				<Navbar bg="primary" variant="dark">
-					<Navbar.Brand href="#home">MarketPulse</Navbar.Brand>
-					<Nav className="mr-auto" />
-					<Form inline>
-						<FormControl type="text" placeholder="UPC CODE" className="mr-sm-2" />
-						<Button variant="outline-light">Search</Button>
-					</Form>
-				</Navbar>
-
 				<header className="product-row product-title">
 					<div className="product-detail-row">
 						<div className="product-column">

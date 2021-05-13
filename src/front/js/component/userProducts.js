@@ -2,49 +2,56 @@ import React, { useContext } from "react";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
+import Col from "react-bootstrap/Col";
 
 export const UserProducts = props => {
 	const { store, actions } = useContext(Context);
-	const history = useHistory();
+
+	const imgStyles = {
+		width: "15rem",
+		height: "10rem"
+	};
+
+	const cardStyles = {
+		width: "16.5rem",
+		height: "20rem",
+		padding: "10px",
+		marginTop: "30px"
+	};
+
 	return (
 		<>
-			{!props.userHasProducts ? (
-				<Jumbotron>
-					<h1>Hello, Diego!</h1>
-					<p>You dont have any products yet</p>
-					<p>
-						<Button variant="primary">Add a new product</Button>
-					</p>
-				</Jumbotron>
-			) : (
-				props.products.map(product => (
-					<Card key={product.id} style={{ width: "18rem" }}>
-						<Card.Img variant="top" src={product.product_image} />
-						<Card.Body>
-							<Card.Title>{product.product_name}</Card.Title>
-							<Card.Text>{product.brand}</Card.Text>
-							<Card.Text>{product.price}</Card.Text>
-							{/* <Link
-								to={{
-									pathname: `/single/${props.theid}`,
-									state: { product: product }
-								}}> */}
-
-							<Button
-								onClick={() => {
-									actions.getProductsByUpc(product.product_upc, history);
-									console.log(store.amazonData);
-								}}
-								variant="danger">
-								Go somewhere
-							</Button>
-							{/* </Link> */}
-						</Card.Body>
-					</Card>
-				))
-			)}
+			{/* <div className="d-flex flex-row"> */}
+			{store.userHasProducts.map((props, i) => {
+				return (
+					<Col className="col-4" key={i}>
+						<Card style={cardStyles}>
+							<Card.Img variant="top" src={props.product.product_image} style={imgStyles} />
+							<Card.Body>
+								<Card.Title>{props.product.product_name}</Card.Title>
+								<Card.Text>${props.product.product_cost}</Card.Text>
+								<Link
+									to={{
+										pathname: `/single`
+									}}>
+									<Button variant="danger">Go somewhere</Button>
+								</Link>
+							</Card.Body>
+						</Card>
+					</Col>
+				);
+			})}
+			{/* </div> */}
 		</>
 	);
+};
+
+UserProducts.propTypes = {
+	product_name: PropTypes.string,
+	product_cost: PropTypes.string,
+	product_image: PropTypes.string,
+	product_upc: PropTypes.string
 };

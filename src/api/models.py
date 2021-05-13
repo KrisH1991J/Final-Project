@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import sys
+import os
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import ForeignKeyConstraint, UniqueConstraint
