@@ -53,7 +53,7 @@ def user_login():
     #if the user exists, then create the new access token and return access token 
     user_id = user.id
     access_token = create_access_token(identity=user_id)
-    return jsonify(access_token=access_token), 200
+    return jsonify(access_token=access_token, user=user.serialize()), 200
 
 @api.route("/user/delete/<int:user_id>", methods=["DELETE"])
 def del_user(user_id):

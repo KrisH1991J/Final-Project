@@ -12,12 +12,15 @@ export const Navigation = () => {
 	const navStyles = {
 		marginLeft: "175px"
 	};
+
 	const linkColor = {
 		color: "yellow"
 	};
+
 	const linkColor1 = {
 		color: "red"
 	};
+
 	const searchStyles = {
 		marginLeft: "175px"
 	};
