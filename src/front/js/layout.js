@@ -25,6 +25,10 @@ const Layout = () => {
 					<div className="container">
 						<Switch>
 							<Route exact path="/">
+								{/* <Home /> */}
+								<Products />
+							</Route>
+							<Route exact path="/login">
 								<Home />
 							</Route>
 							<Route exact path="/products">
@@ -38,6 +42,9 @@ const Layout = () => {
 							</Route>
 							<Route exact path="/singleProduct">
 								<SingleProduct />
+							</Route>
+							<Route exact path="/makeProduct">
+								<MakeProduct />
 							</Route>
 							{/* <Route>
 								<h1>Not found!</h1>

@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const UserProducts = props => {
+	const { store, actions } = useContext(Context);
+	const history = useHistory();
 	return (
 		<>
 			{!props.userHasProducts ? (
@@ -23,17 +26,21 @@ export const UserProducts = props => {
 							<Card.Title>{product.product_name}</Card.Title>
 							<Card.Text>{product.brand}</Card.Text>
 							<Card.Text>{product.price}</Card.Text>
-							<Link
+							{/* <Link
 								to={{
-<<<<<<< HEAD
-									pathname: `/single/${product.id}`
-=======
 									pathname: `/single/${props.theid}`,
 									state: { product: product }
->>>>>>> a64a1d09d7528e198136632a290dc1e19f410394
-								}}>
-								<Button variant="danger">Go somewhere</Button>
-							</Link>
+								}}> */}
+
+							<Button
+								onClick={() => {
+									actions.getProductsByUpc(product.product_upc, history);
+									console.log(store.amazonData);
+								}}
+								variant="danger">
+								Go somewhere
+							</Button>
+							{/* </Link> */}
 						</Card.Body>
 					</Card>
 				))

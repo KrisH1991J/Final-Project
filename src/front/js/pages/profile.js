@@ -34,13 +34,17 @@ export const Profile = () => {
 						Add Product
 					</Nav.Link>
 					<Nav.Link href="/products">View All Products</Nav.Link>
-					<NavDropdown title="Profile" id="collasible-nav-dropdown">
-						<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-						<NavDropdown.Divider />
-						<NavDropdown.Item href="/">Logout</NavDropdown.Item>
-					</NavDropdown>
+					{store.token != null ? (
+						<NavDropdown title="Profile" id="collasible-nav-dropdown">
+							<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item href="/">Logout</NavDropdown.Item>
+						</NavDropdown>
+					) : (
+						<Nav.Link href="/login">Login</Nav.Link>
+					)}
 				</Nav>
 			</Navbar>
 			<div className="container d-flex flex-row">

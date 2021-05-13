@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null || localStorage.getItem("token"),
 			userHasProducts: true,
 			products: [],
+			amazonData: [],
 			fakeProduct: {
 				timestamp: 1620177246272,
 				tokensLeft: 1508,
@@ -40699,6 +40700,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
+			getProductsByUpc: (product_upc, history) => {
+				fetch(`${process.env.KEEPA_API}&domain=1&code=${product_upc}&history=1&stats=1`)
+					.then(res => res.json())
+					.then(data => {
+						setStore({ amazonData: [data] });
+						history.push("/singleProduct");
+					})
+					.catch(error => console.log(error));
+			},
+
 			getProducts: () => {
 				fetch(process.env.BACKEND_URL + "/api/products")
 					.then(res => res.json())
@@ -40719,7 +40730,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				});
 
-				fetch(process.env.BACKEND_URL + "api/login", {
+				fetch(process.env.BACKEND_URL + "/api/login", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -40751,7 +40762,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-				fetch(process.env.BACKEND_URL + "api/signup", {
+				fetch(process.env.BACKEND_URL + "/api/signup", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -40777,7 +40788,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			getCurrentUser: () => {
 				const token = localStorage.getItem("token");
 				console.log(token);
-				fetch(process.env.BACKEND_URL + "api/protected", {
+				fetch(process.env.BACKEND_URL + "/api/protected", {
 					method: "GET",
 					headers: { Authorization: "Bearer " + token }
 				});
@@ -40792,7 +40803,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-				fetch(process.env.BACKEND_URL + "api/products/make", {
+				fetch(process.env.BACKEND_URL + "/api/products/make", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -40814,12 +40825,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(params);
 			},
 			loadProducts: () => {
-				fetch(process.env.BACKEND_URL + "api/products")
+				fetch(process.env.BACKEND_URL + "/api/products")
 					.then(resp => resp.json())
 					.then(data => setStore({ products: data.results }));
 			},
 			loadUsers: () => {
-				fetch(process.env.BACKEND_URL + "api/user")
+				fetch(process.env.BACKEND_URL + "/api/user")
 					.then(resp => resp.json())
 					.then(data => setStore({ users: data.results }));
 			},

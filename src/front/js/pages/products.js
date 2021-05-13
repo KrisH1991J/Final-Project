@@ -51,13 +51,17 @@ export const Products = props => {
 						Add Product
 					</Nav.Link>
 					<Nav.Link href="/products">View All Products</Nav.Link>
-					<NavDropdown title="Profile" id="collasible-nav-dropdown">
-						<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-						<NavDropdown.Divider />
-						<NavDropdown.Item href="/">Logout</NavDropdown.Item>
-					</NavDropdown>
+					{store.token != null ? (
+						<NavDropdown title="Profile" id="collasible-nav-dropdown">
+							<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+							<NavDropdown.Divider />
+							<NavDropdown.Item href="/">Logout</NavDropdown.Item>
+						</NavDropdown>
+					) : (
+						<Nav.Link href="/login">Login</Nav.Link>
+					)}
 				</Nav>
 			</Navbar>
 			<div className="d-flex flex-row">
@@ -69,9 +73,16 @@ export const Products = props => {
 									<img src={props.product_image} className="card-img-top" style={imgStyles} />
 									<div className="card-body">
 										<h5 className="card-title">{props.product_name}</h5>
-										<Link to={`/single/${props.id}`}>
-											<Button variant="danger">Go somewhere</Button>
-										</Link>
+										{/* <Link to={`/single/${props.id}`}> */}
+										<Button
+											onClick={() => {
+												actions.getProductsByUpc();
+												// console.log(store.amazonData);
+											}}
+											variant="danger">
+											Go somewhere
+										</Button>
+										{/* </Link> */}
 									</div>
 								</div>
 							</Col>
