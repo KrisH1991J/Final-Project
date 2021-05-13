@@ -8,7 +8,6 @@ import { Context } from "../store/appContext";
 import PropTypes from "prop-types";
 import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
-
 export const Profile = props => {
 	const { store, actions } = useContext(Context);
 	const imgStyles = {
@@ -16,12 +15,10 @@ export const Profile = props => {
 		height: "180px",
 		marginTop: "30px"
 	};
-
 	const usernameStyle = {
 		fontSize: "24px",
 		marginTop: "15px"
 	};
-
 	return (
 		<div>
 			<div className="container d-flex flex-row">
@@ -72,7 +69,6 @@ export const Profile = props => {
 		</div>
 	);
 };
-
 Profile.propTypes = {
 	username: PropTypes.string,
 	email: PropTypes.string,

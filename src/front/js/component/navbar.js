@@ -6,9 +6,7 @@ import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import FormControl from "react-bootstrap/FormControl";
-
 import { Context } from "../store/appContext";
-
 export const Navigation = () => {
 	const { store, actions } = useContext(Context);
 	const navStyles = {
@@ -26,7 +24,6 @@ export const Navigation = () => {
 	const searchStyles = {
 		marginLeft: "175px"
 	};
-
 	return (
 		<>
 			{store.isLoggedIn && (

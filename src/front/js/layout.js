@@ -27,6 +27,10 @@ const Layout = () => {
 						<Navigation />
 						<Switch>
 							<Route exact path="/">
+								{/* <Home /> */}
+								<Products />
+							</Route>
+							<Route exact path="/login">
 								<Home />
 							</Route>
 							<Route exact path="/products">
@@ -40,9 +44,6 @@ const Layout = () => {
 							</Route>
 							<Route exact path="/makeProduct">
 								<MakeProduct />
-							</Route>
-							<Route exact path="/settings">
-								<Settings />
 							</Route>
 						</Switch>
 						<Footer />
