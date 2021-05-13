@@ -17,6 +17,11 @@ export const Profile = props => {
 		marginTop: "30px"
 	};
 
+	const usernameStyle = {
+		fontSize: "24px",
+		marginTop: "15px"
+	};
+
 	return (
 		<div>
 			<div className="container d-flex flex-row">
@@ -32,10 +37,7 @@ export const Profile = props => {
 					</div>
 					<div className="profile-information">
 						<div className="username">
-							<h1>
-								{props.username}
-								OleBoi12
-							</h1>
+							<h1 style={usernameStyle}>{store.getCurrentUser.username}</h1>
 							<div className="review">
 								<h2 className="review-icon" style={{ color: "yellow" }}>
 									<AiFillStar />
@@ -46,22 +48,18 @@ export const Profile = props => {
 							</div>
 						</div>
 						<div className="row g-0">
-							<div className="col-md">
+							<div className="col-3">
 								<h6 className="text-muted">Name: </h6>
 							</div>
-							<div className="col-md" style={{ color: "red" }}>
-								{props.first_name} {props.last_name}
-								Oliver Boyson
+							<div style={{ color: "red" }}>
+								{store.getCurrentUser.first_name} {store.getCurrentUser.last_name}
 							</div>
 						</div>
 						<div className="row g-0">
-							<div className="col-md">
-								<h6 className="text-muted">Email: </h6>
+							<div className="col-3">
+								<h6 className="text-muted">Email:</h6>
 							</div>
-							<div className="col-md" style={{ color: "red" }}>
-								{props.email}
-								OleBoi12@email.com
-							</div>
+							<div style={{ color: "red" }}>{store.getCurrentUser.email}</div>
 						</div>
 					</div>
 				</div>

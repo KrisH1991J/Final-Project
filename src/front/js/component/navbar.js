@@ -15,6 +15,14 @@ export const Navigation = () => {
 		marginLeft: "175px"
 	};
 
+	const linkColor = {
+		color: "yellow"
+	};
+
+	const linkColor1 = {
+		color: "red"
+	};
+
 	const searchStyles = {
 		marginLeft: "175px"
 	};
@@ -30,15 +38,29 @@ export const Navigation = () => {
 						<Button variant="outline-danger">Search</Button>
 					</Form>
 					<Nav className="mr-auto">
-						<Nav.Link href="/makeProduct" style={navStyles}>
-							Add Product
+						<Nav.Link style={navStyles}>
+							<Link to="/makeProduct" style={linkColor}>
+								Add Product
+							</Link>
 						</Nav.Link>
-						<Nav.Link href="/products">View All Products</Nav.Link>
-						<NavDropdown title="Profile" id="collasible-nav-dropdown">
-							<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
-							<NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
+						<Nav.Link>
+							<Link to="/products" style={linkColor}>
+								View All Products
+							</Link>
+						</Nav.Link>
+						<NavDropdown title="Profile" id="collasible-nav-dropdown" style={linkColor}>
+							<NavDropdown.Item>
+								<Link to="/profile" style={linkColor1}>
+									Home
+								</Link>
+							</NavDropdown.Item>
+							<NavDropdown.Item>
+								<Link to="/settings" style={linkColor1}>
+									Settings
+								</Link>
+							</NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item href="/" onClick={() => actions.logoutUser()}>
+							<NavDropdown.Item href="/" style={linkColor1} onClick={() => actions.logoutUser()}>
 								Logout
 							</NavDropdown.Item>
 						</NavDropdown>

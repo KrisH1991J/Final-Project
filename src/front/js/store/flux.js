@@ -6,7 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userHasProducts: [],
 			products: [],
 			users: [],
-			currentUser: null,
+			getCurrentUser: null,
 			fakeProduct: {
 				timestamp: 1620177246272,
 				tokensLeft: 1508,
@@ -40702,7 +40702,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		actions: {
 			getProducts: () => {
-				fetch(process.env.BACKEND_URL + "/api/products")
+				fetch(process.env.BACKEND_URL + "api/products")
 					.then(res => res.json())
 					.then(data => {
 						setStore({ products: data });
@@ -40734,9 +40734,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return resp.json();
 					})
 					.then(data => {
-						setStore({ isLoggedIn: true });
-						setStore({ token: data.access_token });
+						setStore({ token: data.access_token, isLoggedIn: true, getCurrentUser: data.user });
 						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("user", data.user);
 						history.push("/profile");
 					})
 					.catch(error => console.log("Error => ", error));
@@ -40744,6 +40744,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			logoutUser: () => {
 				localStorage.removeItem("token");
+				localStorage.removeItem("user");
+				setStore({ token: null });
+				setStore({ getCurrentUser: null });
 			},
 			signupUser: (event, history) => {
 				event.preventDefault();
@@ -40782,14 +40785,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				if (store.token !== null) setStore({ isLoggedIn: true });
 				if (store.token === null) setStore({ isLoggedIn: false });
-			},
-			getCurrentUser: () => {
-				const token = localStorage.getItem("token");
-				console.log(token);
-				fetch(process.env.BACKEND_URL + "api/protected", {
-					method: "GET",
-					headers: { Authorization: "Bearer " + token }
-				});
 			},
 			makeProduct: (event, history) => {
 				event.preventDefault();
@@ -40844,7 +40839,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getMessage: () => {
 				// fetching data from the backend
-				fetch(process.env.BACKEND_URL + "/api/hello")
+				fetch(process.env.BACKEND_URL + "api/hello")
 					.then(resp => resp.json())
 					.then(data => setStore({ message: data.message }))
 					.catch(error => console.log("Error loading message from backend", error));
