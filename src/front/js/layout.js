@@ -11,6 +11,7 @@ import { Products } from "./pages/products";
 import { Login } from "./pages/login";
 import { SingleProduct } from "./pages/singleProduct";
 import { Navigation } from "./component/navbar";
+import { Settings } from "./pages/settings";
 
 //create your first component
 const Layout = () => {
@@ -39,6 +40,9 @@ const Layout = () => {
 							</Route>
 							<Route exact path="/makeProduct">
 								<MakeProduct />
+							</Route>
+							<Route exact path="/settings">
+								<Settings />
 							</Route>
 						</Switch>
 						<Footer />

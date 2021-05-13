@@ -36,10 +36,9 @@ export const Navigation = () => {
 						<Nav.Link href="/products">View All Products</Nav.Link>
 						<NavDropdown title="Profile" id="collasible-nav-dropdown">
 							<NavDropdown.Item href="/profile">Home</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-							<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+							<NavDropdown.Item href="/settings">Settings</NavDropdown.Item>
 							<NavDropdown.Divider />
-							<NavDropdown.Item href="/" onClick={() => actions.logoutUser(null)}>
+							<NavDropdown.Item href="/" onClick={() => actions.logoutUser()}>
 								Logout
 							</NavDropdown.Item>
 						</NavDropdown>

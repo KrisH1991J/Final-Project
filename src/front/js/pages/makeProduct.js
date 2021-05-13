@@ -14,17 +14,14 @@ export const MakeProduct = props => {
 	const formStyles = {
 		width: "410px",
 		height: "500px",
-		position: "absolute",
-		top: "34.75%",
-		left: "68.25%",
-		transform: "translate(-50%, -50%)",
+		marginTop: "30px",
 		padding: "10px",
 		backgroundColor: "#343a40",
 		color: "white"
 	};
 
 	return (
-		<div>
+		<div className="container d-flex">
 			<div className="card mb-3" style={{ maxWidth: "700px", marginTop: "30px" }}>
 				<div className="row g-0">
 					<div className="col-md-8">
@@ -33,11 +30,10 @@ export const MakeProduct = props => {
 							style={{ height: "500px", width: "500px" }}
 						/>
 					</div>
-
 					<div className="col-md-4">
 						<div className="card-body">
 							<h5 className="card-title"> Product Name </h5>
-							<h5 className="text-muted"> 19990490 </h5>
+							<h5 className="text-muted"> 199904905874 </h5>
 							<div className="row g-0">
 								<div className="col-md-8">
 									<InputGroup className="mb-3">

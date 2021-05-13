@@ -11,12 +11,12 @@ export const UserProducts = props => {
 	const { store, actions } = useContext(Context);
 
 	const imgStyles = {
-		width: "16.5rem",
+		width: "15rem",
 		height: "10rem"
 	};
 
 	const cardStyles = {
-		width: "18rem",
+		width: "16.5rem",
 		height: "20rem",
 		padding: "10px",
 		marginTop: "30px"
@@ -24,27 +24,27 @@ export const UserProducts = props => {
 
 	return (
 		<>
-			<div className="container d-flex flex-row">
-				{store.userHasProducts.map((props, i) => {
-					return (
-						<Col className="col-3" key={i}>
-							<Card style={cardStyles}>
-								<Card.Img variant="top" src={props.product.product_image} style={imgStyles} />
-								<Card.Body>
-									<Card.Title>{props.product.product_name}</Card.Title>
-									<Card.Text>${props.product.product_cost}</Card.Text>
-									<Link
-										to={{
-											pathname: `/single`
-										}}>
-										<Button variant="danger">Go somewhere</Button>
-									</Link>
-								</Card.Body>
-							</Card>
-						</Col>
-					);
-				})}
-			</div>
+			{/* <div className="d-flex flex-row"> */}
+			{store.userHasProducts.map((props, i) => {
+				return (
+					<Col className="col-4" key={i}>
+						<Card style={cardStyles}>
+							<Card.Img variant="top" src={props.product.product_image} style={imgStyles} />
+							<Card.Body>
+								<Card.Title>{props.product.product_name}</Card.Title>
+								<Card.Text>${props.product.product_cost}</Card.Text>
+								<Link
+									to={{
+										pathname: `/single`
+									}}>
+									<Button variant="danger">Go somewhere</Button>
+								</Link>
+							</Card.Body>
+						</Card>
+					</Col>
+				);
+			})}
+			{/* </div> */}
 		</>
 	);
 };

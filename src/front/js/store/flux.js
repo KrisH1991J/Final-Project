@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null || localStorage.getItem("token"),
 			userHasProducts: [],
 			products: [],
+			users: [],
+			currentUser: null,
 			fakeProduct: {
 				timestamp: 1620177246272,
 				tokensLeft: 1508,
@@ -40727,7 +40729,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 					.then(resp => {
 						if (!resp.ok) {
-							throw Error(resp.statusText);
+							throw Error("Invalid Email or Password!");
 						}
 						return resp.json();
 					})
