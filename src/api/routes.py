@@ -110,6 +110,17 @@ def get_userhasproducts():
     all_UHP = list(map(lambda x: x.serialize(), userhasproducts_query))
     return jsonify(results=all_UHP), 200
 
+@api.route('/userhasproducts/make', methods=['POST'])
+def make_userProduct():
+    body = request.get_json()
+
+    new_userProduct = User_Has_Products(user_id=body['user_id'], product_id=body['product_id'])
+    db.session.add(new_userProduct)
+    db.session.commit()
+    userProducts_query = User_Has_Products.query.all()
+    all_userProducts = list(map(lambda x: x.serialize(), userProducts_query))
+    return jsonify(results=all_userProducts), 200
+
 @api.route('/userhasproducts/<int:userhasproducts_id>', methods=['GET'])
 def get_singleUHP(userhasproducts_id):
     singleUHP = User_Has_Products.query.get(userhasproducts_id)

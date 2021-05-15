@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null || localStorage.getItem("token"),
 			userHasProducts: [],
 			products: [],
+			getCurrentUser: null || localStorage.getItem("user"),
 			amazonData: []
 		},
 
@@ -38,7 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				});
 
-				fetch(process.env.BACKEND_URL + "/api/login", {
+				fetch(process.env.BACKEND_URL + "api/login", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -76,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-				fetch(process.env.BACKEND_URL + "/api/signup", {
+				fetch(process.env.BACKEND_URL + "api/signup", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -90,9 +91,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return resp.json();
 					})
 					.then(data => {
-						setStore({ isLoggedIn: true });
-						setStore({ token: data.access_token });
+						setStore({ token: data.access_token, isLoggedIn: true, getCurrentUser: data.user });
 						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("user", data.user);
 						history.push("/profile");
 					})
 					.catch(error => console.log("Error =>", error));
@@ -114,7 +115,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						params[el.name] = el.value;
 					}
 				});
-				fetch(process.env.BACKEND_URL + "/api/products/make", {
+				fetch(process.env.BACKEND_URL + "api/products/make", {
 					method: "POST",
 					body: JSON.stringify(params),
 					headers: {
@@ -135,13 +136,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				console.log(params);
 			},
+			// makeUserProduct: (event, history) => {
+			// 	event.preventDefault();
+			// 	const formElements = event.target.elements;
+			// 	let params = {};
+
+			// 	Array.prototype.slice.call(formElements, 0).map(el => {
+			// 		if (el.type !== "submit") {
+			// 			params[el.name] = el.value;
+			// 		}
+			// 	});
+			// 	fetch(process.env.BACKEND_URL + "api/userhasproducts/make", {
+			// 		method: "POST",
+			// 		body: JSON.stringify(params),
+			// 		headers: {
+			// 			"Content-Type": "application/json"
+			// 		}
+			// 	})
+			// 		.then(resp => {
+			// 			if (!resp.ok) {
+			// 				throw Error(resp.statusText);
+			// 			}
+			// 			return resp.json();
+			// 		})
+			// 		.then(data => {
+			// 			getStore().getCurrentUser;
+			// 			getStore().products;
+			// 			setStore({ userHasProducts: data.results });
+			// 			history.push("/profile");
+			// 		})
+			// 		.catch(error => console.log("Error =>", error));
+
+			// 	console.log(params);
+			// },
 			loadProducts: () => {
-				fetch(process.env.BACKEND_URL + "/api/products")
+				fetch(process.env.BACKEND_URL + "api/products")
 					.then(resp => resp.json())
 					.then(data => setStore({ products: data.results }));
 			},
 			loadUsers: () => {
-				fetch(process.env.BACKEND_URL + "/api/user")
+				fetch(process.env.BACKEND_URL + "api/user")
 					.then(resp => resp.json())
 					.then(data => setStore({ users: data.results }));
 			},

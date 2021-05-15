@@ -68,7 +68,7 @@ class User_Has_Products(db.Model):
         return {
             "id": self.id,
             "user" : self.user.serialize(),
-            "product" : self.product.serialize()
+            "product" : self.product.serialize(),
             # do not serialize the password, its a security breach
         }
 

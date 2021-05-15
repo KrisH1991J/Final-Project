@@ -22,29 +22,33 @@ export const UserProducts = props => {
 		marginTop: "30px"
 	};
 
+	const rowStyle = {
+		paddingRight: "10px",
+		paddingLeft: "5px"
+	};
+
 	return (
 		<>
-			{/* <div className="d-flex flex-row"> */}
 			{store.userHasProducts.map((props, i) => {
-				return (
-					<Col className="col-4" key={i}>
-						<Card style={cardStyles}>
-							<Card.Img variant="top" src={props.product.product_image} style={imgStyles} />
-							<Card.Body>
-								<Card.Title>{props.product.product_name}</Card.Title>
-								<Card.Text>${props.product.product_cost}</Card.Text>
-								<Link
-									to={{
-										pathname: `/single`
-									}}>
-									<Button variant="danger">Go somewhere</Button>
-								</Link>
-							</Card.Body>
-						</Card>
-					</Col>
-				);
+				if (props.user.id === store.getCurrentUser.id) {
+					return (
+						<div className="row" style={rowStyle} key={i}>
+							<Col className="col-4">
+								<Card style={cardStyles}>
+									<Card.Img variant="top" src={props.product.product_image} style={imgStyles} />
+									<Card.Body>
+										<Card.Title>{props.product.product_name}</Card.Title>
+										<Card.Text>${props.product.product_cost}</Card.Text>
+										<Link to={`/singleProduct/${props.id}`}>
+											<Button variant="danger">Go somewhere</Button>
+										</Link>
+									</Card.Body>
+								</Card>
+							</Col>
+						</div>
+					);
+				}
 			})}
-			{/* </div> */}
 		</>
 	);
 };

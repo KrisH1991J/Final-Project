@@ -16,7 +16,7 @@ export const Products = props => {
 
 	const imgStyles = {
 		width: "327px",
-		height: "375px"
+		height: "340px"
 	};
 
 	const cardStyles = {
@@ -37,6 +37,7 @@ export const Products = props => {
 									<img src={props.product_image} className="card-img-top" style={imgStyles} />
 									<div className="card-body">
 										<h5 className="card-title">{props.product_name}</h5>
+										<Card.Text>${props.product_cost}</Card.Text>
 										<Link to={`/singleProduct/${props.id}`}>
 											<Button variant="danger">Go somewhere</Button>
 										</Link>

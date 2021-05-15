@@ -10,7 +10,7 @@ import Image from "react-bootstrap/Image";
 import Col from "react-bootstrap/Col";
 export const Profile = props => {
 	const { store, actions } = useContext(Context);
-	const imgStyles = {
+	const picStyle = {
 		width: "171px",
 		height: "180px",
 		marginTop: "30px"
@@ -19,6 +19,7 @@ export const Profile = props => {
 		fontSize: "24px",
 		marginTop: "15px"
 	};
+
 	return (
 		<div>
 			<div className="container d-flex flex-row">
@@ -28,7 +29,7 @@ export const Profile = props => {
 							<Image
 								src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
 								roundedCircle
-								style={imgStyles}
+								style={picStyle}
 							/>
 						</Col>
 					</div>
@@ -62,7 +63,7 @@ export const Profile = props => {
 				</div>
 				<div className="d-flex flex-row">
 					<div className="row">
-						<UserProducts userHasProducts={store.userHasProducts} />
+						<UserProducts />
 					</div>
 				</div>
 			</div>
