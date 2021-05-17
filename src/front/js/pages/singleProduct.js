@@ -23,44 +23,43 @@ export const SingleProduct = props => {
 	// const backendData = store.products[0] == undefined ? false : true;
 	// const history = useHistory();
 
-	// let filterProducts =
-	// 	backendData && amzData
-	// 		? store.products.filter(product => {
-	// 				return product.product_upc == store.amazonData[0].products[0].upcList[0];
-	// 		  })
-	// 		: [{ product_cost: 0 }];
-	// const [cost, setCost] = useState(filterProducts[0].product_cost);
-	// const [totalProfit, setTotalProfit] = useState(0);
-	// const params = useParams();
-	// const [price, setPrice] = useState();
-	// const [margin, setMargin] = useState(0);
-	// const [roi, setRoi] = useState(0);
-	// console.log(params);
-	// // const words = str.split(',');
-	// const imagesArray = amzData ? store.amazonData[0].products[0].imagesCSV.split(",") : "";
-	// console.log("images: ", imagesArray);
-	// useEffect(
-	// 	() => {
-	// 		if (amzData) {
-	// 			const profit = () => {
-	// 				let price = store.amazonData[0].products[0].stats.current[1] / 100;
-	// 				let refFee = price * 0.15;
-	// 				let fba = store.amazonData[0].products[0].fbaFees.pickAndPackFee / 100;
-	// 				let storage = store.amazonData[0].products[0].fbaFees.storageFee / 100;
-	// 				let totalCost = fba + storage + refFee + parseInt(cost);
-	// 				console.log(((price - totalCost) / price) * 100);
-	// 				setTotalProfit(price - totalCost);
-	// 				setMargin(((price - totalCost) / price) * 100);
-	// 				setRoi(((price - totalCost) / cost) * 100);
-	// 			};
-	// 			profit();
-	// 		}
-	// 	},
-	// 	[cost]
-	// );
-	// const profitColor = () => {};z
-	// return amzData ? (
-	return (
+	let filterProducts =
+		backendData && amzData
+			? store.products.filter(product => {
+					return product.product_upc == store.amazonData[0].products[0].upcList[0];
+			  })
+			: [{ product_cost: 0 }];
+	const [cost, setCost] = useState(filterProducts[0].product_cost);
+	const [totalProfit, setTotalProfit] = useState(0);
+	const params = useParams();
+	const [price, setPrice] = useState();
+	const [margin, setMargin] = useState(0);
+	const [roi, setRoi] = useState(0);
+	console.log(params);
+	// const words = str.split(',');
+	const imagesArray = amzData ? store.amazonData[0].products[0].imagesCSV.split(",") : "";
+	console.log("images: ", imagesArray);
+	useEffect(
+		() => {
+			if (amzData) {
+				const profit = () => {
+					let price = store.amazonData[0].products[0].stats.current[1] / 100;
+					let refFee = price * 0.15;
+					let fba = store.amazonData[0].products[0].fbaFees.pickAndPackFee / 100;
+					let storage = store.amazonData[0].products[0].fbaFees.storageFee / 100;
+					let totalCost = fba + storage + refFee + parseInt(cost);
+					console.log(((price - totalCost) / price) * 100);
+					setTotalProfit(price - totalCost);
+					setMargin(((price - totalCost) / price) * 100);
+					setRoi(((price - totalCost) / cost) * 100);
+				};
+				profit();
+			}
+		},
+		[cost]
+	);
+	const profitColor = () => {};
+	return amzData ? (
 		<div className="product-body">
 			<section className="product">
 				<header className="product-row product-title">
@@ -256,8 +255,7 @@ export const SingleProduct = props => {
 				</div>
 			</section>
 		</div>
+	) : (
+		<div> UPC dont found </div>
 	);
-	// ) : (
-	// 	<div> UPC dont found </div>
-	// );
 };

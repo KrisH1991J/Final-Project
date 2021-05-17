@@ -54,7 +54,9 @@ export const Products = props => {
 											<h5 className="card-title">{props.product_name}</h5>
 											<Card.Text>${props.product_cost}</Card.Text>
 											<Link to={`/singleProduct/${props.id}`}>
-												<Button variant="danger">Go somewhere</Button>
+												<Button variant="danger" onClick={() => actions.getProductsByUpc()}>
+													Go somewhere
+												</Button>
 											</Link>
 										</div>
 									</div>
