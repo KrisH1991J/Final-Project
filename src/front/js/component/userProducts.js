@@ -19,7 +19,7 @@ export const UserProducts = props => {
 		width: "16.5rem",
 		height: "20rem",
 		padding: "10px",
-		marginTop: "30px"
+		marginTop: "20px"
 	};
 
 	const rowStyle = {
@@ -27,8 +27,17 @@ export const UserProducts = props => {
 		paddingLeft: "5px"
 	};
 
+	const headerStyle = {
+		marginLeft: "325px",
+		marginTop: "10px",
+		fontSize: "24px"
+	};
+
 	return (
 		<>
+			<div className="col-12">
+				<h2 style={headerStyle}>Your Products</h2>
+			</div>
 			{store.userHasProducts.map((props, i) => {
 				if (props.user.id === store.getCurrentUser.id) {
 					return (

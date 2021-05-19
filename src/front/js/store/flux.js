@@ -5,6 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			token: null || localStorage.getItem("token"),
 			userHasProducts: [],
 			products: [],
+			users: [],
 			getCurrentUser: null || localStorage.getItem("user"),
 			amazonData: []
 		},
@@ -69,6 +70,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			signupUser: (event, history) => {
 				event.preventDefault();
+				let actions = getActions();
+				let store = getStore();
 				const formElements = event.target.elements;
 				let params = {};
 
@@ -91,14 +94,51 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return resp.json();
 					})
 					.then(data => {
-						setStore({ token: data.access_token, isLoggedIn: true, getCurrentUser: data.user });
-						localStorage.setItem("token", data.access_token);
-						localStorage.setItem("user", data.user);
-						history.push("/profile");
+						setStore({ token: data.access_token, token: null });
+						alert("Account Created. You can now log in!");
+						history.go(0);
 					})
+					// .then(data => {
+					// 	console.log("all users", data);
+					// 	// console.log("before", store.users);
+					// 	// const updatedUsers = await actions.loadUsers();
+					// 	// console.log("after", updatedUsers);
+					// 	actions.loadUsers();
+					// 	console.log("users", store.users);
+					// 	return store.users;
+					// 	// let lastElement = store.users[store.users.length - 1];
+					// 	// actions.loginFromSignup(lastElement.id, lastElement.username, lastElement.email);
+					// })
+					// .then(data => {
+					// 	console.log("user", data);
+					// 	// history.push("/profile");
+					// })
 					.catch(error => console.log("Error =>", error));
 
 				console.log(params);
+			},
+			loginFromSignup: (id, username, email) => {
+				let actions = getActions();
+				let store = getStore();
+				fetch(process.env.BACKEND_URL + "api/login/fromsignup", {
+					method: "POST",
+					body: JSON.stringify({ id: id, username: username, email: email }),
+					headers: {
+						"Content-Type": "application/json charset=UTF-8"
+					}
+				})
+					.then(resp => {
+						if (!resp.ok) {
+							throw Error(resp.statusText);
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ token: data.access_token, isLoggedIn: true, getCurrentUser: data.user });
+						localStorage.setItem("token", data.access_token);
+						localStorage.setItem("user", data.user);
+					})
+					.catch(error => console.log("Error =>", error));
 			},
 			checkSession: () => {
 				const store = getStore();
@@ -107,6 +147,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			makeProduct: (event, history) => {
 				event.preventDefault();
+				let actions = getActions();
+				let store = getStore();
 				const formElements = event.target.elements;
 				let params = {};
 
@@ -130,45 +172,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then(data => {
 						setStore({ products: data.results });
+					})
+					.then(data => {
+						let lastElement = store.products[store.products.length - 1];
+						actions.makeUserProduct(store.getCurrentUser.id, lastElement.id);
 						history.push("/profile");
 					})
 					.catch(error => console.log("Error =>", error));
 
 				console.log(params);
 			},
-			// makeUserProduct: (event, history) => {
-			// 	event.preventDefault();
-			// 	const formElements = event.target.elements;
-			// 	let params = {};
-
-			// 	Array.prototype.slice.call(formElements, 0).map(el => {
-			// 		if (el.type !== "submit") {
-			// 			params[el.name] = el.value;
-			// 		}
-			// 	});
-			// 	fetch(process.env.BACKEND_URL + "api/userhasproducts/make", {
-			// 		method: "POST",
-			// 		body: JSON.stringify(params),
-			// 		headers: {
-			// 			"Content-Type": "application/json"
-			// 		}
-			// 	})
-			// 		.then(resp => {
-			// 			if (!resp.ok) {
-			// 				throw Error(resp.statusText);
-			// 			}
-			// 			return resp.json();
-			// 		})
-			// 		.then(data => {
-			// 			getStore().getCurrentUser;
-			// 			getStore().products;
-			// 			setStore({ userHasProducts: data.results });
-			// 			history.push("/profile");
-			// 		})
-			// 		.catch(error => console.log("Error =>", error));
-
-			// 	console.log(params);
-			// },
+			makeUserProduct: (user_id, product_id) => {
+				fetch(process.env.BACKEND_URL + "api/userhasproducts/make", {
+					method: "POST",
+					body: JSON.stringify({ user_id: user_id, product_id: product_id }),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(resp => {
+						if (!resp.ok) {
+							throw Error(resp.statusText);
+						}
+						return resp.json();
+					})
+					.then(data => {
+						setStore({ userHasProducts: data.results });
+					})
+					.catch(error => console.log("Error =>", error));
+			},
 			loadProducts: () => {
 				fetch(process.env.BACKEND_URL + "api/products")
 					.then(resp => resp.json())

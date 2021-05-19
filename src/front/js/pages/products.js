@@ -26,24 +26,40 @@ export const Products = props => {
 		marginTop: "30px"
 	};
 
+	const rowStyle = {
+		marginLeft: "7px"
+	};
+
+	const headerStyle = {
+		marginLeft: "425px",
+		marginTop: "10px",
+		marginBottom: "-10px",
+		fontSize: "24px"
+	};
+
 	return (
 		<>
+			<div className="col-12">
+				<h2 style={headerStyle}>All Products For Sale.</h2>
+			</div>
 			<div className="d-flex flex-row">
 				<Row>
 					{store.products.map((props, i) => {
 						return (
-							<Col className="col-4" key={i}>
-								<div className="card" style={cardStyles}>
-									<img src={props.product_image} className="card-img-top" style={imgStyles} />
-									<div className="card-body">
-										<h5 className="card-title">{props.product_name}</h5>
-										<Card.Text>${props.product_cost}</Card.Text>
-										<Link to={`/singleProduct/${props.id}`}>
-											<Button variant="danger">Go somewhere</Button>
-										</Link>
+							<div className="row" style={rowStyle} key={i}>
+								<Col className="col-4">
+									<div className="card" style={cardStyles}>
+										<img src={props.product_image} className="card-img-top" style={imgStyles} />
+										<div className="card-body">
+											<h5 className="card-title">{props.product_name}</h5>
+											<Card.Text>${props.product_cost}</Card.Text>
+											<Link to={`/singleProduct/${props.id}`}>
+												<Button variant="danger">Go somewhere</Button>
+											</Link>
+										</div>
 									</div>
-								</div>
-							</Col>
+								</Col>
+							</div>
 						);
 					})}
 				</Row>

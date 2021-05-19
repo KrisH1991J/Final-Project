@@ -39,6 +39,7 @@ class Products(db.Model):
     product_cost = db.Column(db.String(10), nullable=False)
     product_image = db.Column(db.String(250))
     product_upc = db.Column(db.String(12), unique=True, nullable=False)
+    product_description = db.Column(db.String(250))
 
     def __repr__(self):
         return '<Products %r>' % self.product_name

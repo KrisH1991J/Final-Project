@@ -55,6 +55,20 @@ def user_login():
     access_token = create_access_token(identity=user_id)
     return jsonify(access_token=access_token, user=user.serialize()), 200
 
+@api.route("/login/fromsignup", methods=["POST"])
+def user_login_from_signup():
+    email = request.json.get("username", None)
+    password = request.json.get("email", None)
+    user = User.query.filter_by(username=username, email=email).first()
+
+    if user is None:
+        raise APIException("Bad email or username", status_code=400)
+
+    #if the user exists, then create the new access token and return access token 
+    user_id = user.id
+    access_token = create_access_token(identity=user_id)
+    return jsonify(access_token=access_token, user=user.serialize()), 200
+
 @api.route("/user/delete/<int:user_id>", methods=["DELETE"])
 def del_user(user_id):
     sel_user = User.query.get(user_id)
@@ -81,6 +95,16 @@ def get_products():
     product_query = Products.query.all()
     all_products = list(map(lambda x: x.serialize(), product_query))
     return jsonify(results=all_products), 200
+
+@api.route("/products/delete/<int:product_id>", methods=["DELETE"])
+def del_product(product_id):
+    sel_product = Products.query.get(product_id)
+    if sel_product is None:
+        raise APIException("Product not found", status_code=404)
+    db.session.delete(sel_product)
+    db.session.commit()
+
+    return jsonify("ok"), 200
 
 @api.route('/products/make', methods=['POST'])
 def make_product():
