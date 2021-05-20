@@ -59,6 +59,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						localStorage.setItem("user", data.user);
 						history.push("/profile");
 					})
+					.then(data => {
+						setTimeout(
+							alert,
+							250,
+							"Welcome to your profile! You can add products and view a list of all products on the Navbar!"
+						);
+					})
 					.catch(error => console.log("Error => ", error));
 				console.log(params);
 			},
@@ -98,47 +105,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 						alert("Account Created. You can now log in!");
 						history.go(0);
 					})
-					// .then(data => {
-					// 	console.log("all users", data);
-					// 	// console.log("before", store.users);
-					// 	// const updatedUsers = await actions.loadUsers();
-					// 	// console.log("after", updatedUsers);
-					// 	actions.loadUsers();
-					// 	console.log("users", store.users);
-					// 	return store.users;
-					// 	// let lastElement = store.users[store.users.length - 1];
-					// 	// actions.loginFromSignup(lastElement.id, lastElement.username, lastElement.email);
-					// })
-					// .then(data => {
-					// 	console.log("user", data);
-					// 	// history.push("/profile");
-					// })
 					.catch(error => console.log("Error =>", error));
 
 				console.log(params);
-			},
-			loginFromSignup: (id, username, email) => {
-				let actions = getActions();
-				let store = getStore();
-				fetch(process.env.BACKEND_URL + "api/login/fromsignup", {
-					method: "POST",
-					body: JSON.stringify({ id: id, username: username, email: email }),
-					headers: {
-						"Content-Type": "application/json charset=UTF-8"
-					}
-				})
-					.then(resp => {
-						if (!resp.ok) {
-							throw Error(resp.statusText);
-						}
-						return resp.json();
-					})
-					.then(data => {
-						setStore({ token: data.access_token, isLoggedIn: true, getCurrentUser: data.user });
-						localStorage.setItem("token", data.access_token);
-						localStorage.setItem("user", data.user);
-					})
-					.catch(error => console.log("Error =>", error));
 			},
 			checkSession: () => {
 				const store = getStore();

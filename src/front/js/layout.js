@@ -8,7 +8,6 @@ import { Footer } from "./component/footer";
 import { Profile } from "./pages/profile";
 import { MakeProduct } from "./pages/makeProduct";
 import { Products } from "./pages/products";
-import { Login } from "./pages/login";
 import { SingleProduct } from "./pages/singleProduct";
 import { Navigation } from "./component/navbar";
 
@@ -26,10 +25,6 @@ const Layout = () => {
 						<Navigation />
 						<Switch>
 							<Route exact path="/">
-								<Home />
-								{/* <Products /> */}
-							</Route>
-							<Route exact path="/login">
 								<Home />
 							</Route>
 							<Route exact path="/products">
