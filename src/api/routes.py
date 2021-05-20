@@ -116,7 +116,7 @@ def make_product():
     if product_upc is None:
         raise APIException("That upc code has already been used", status_code=400)
 
-    new_product = Products(product_name=body['product_name'], product_cost=body['product_cost'], product_image=body['product_image'], product_upc=product_upc)
+    new_product = Products(product_name=body['product_name'], product_cost=body['product_cost'], product_image=body['product_image'], product_upc=product_upc, product_description=body['product_description'])
     db.session.add(new_product)
     db.session.commit()
     product_query = Products.query.all()

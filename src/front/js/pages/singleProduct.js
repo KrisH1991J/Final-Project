@@ -14,14 +14,14 @@ import { FiInfo } from "react-icons/fi";
 
 export const SingleProduct = props => {
 	const { store, actions } = useContext(Context);
-	// const amzData =
-	// 	store.amazonData[0] == undefined ||
-	// 	store.amazonData[0].products[0] == undefined ||
-	// 	store.amazonData[0].products == undefined
-	// 		? false
-	// 		: true;
-	// const backendData = store.products[0] == undefined ? false : true;
-	// const history = useHistory();
+	const amzData =
+		store.amazonData[0] == undefined ||
+		store.amazonData[0].products[0] == undefined ||
+		store.amazonData[0].products == undefined
+			? false
+			: true;
+	const backendData = store.products[0] == undefined ? false : true;
+	const history = useHistory();
 
 	let filterProducts =
 		backendData && amzData
@@ -220,6 +220,6 @@ export const SingleProduct = props => {
 			</div>{" "}
 		</>
 	) : (
-		<div> UPC dont found </div>
+		<div> UPC not found </div>
 	);
 };

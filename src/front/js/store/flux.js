@@ -118,6 +118,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (store.token === null) setStore({ isLoggedIn: false });
 			},
 			makeProduct: (params, history) => {
+				let actions = getActions();
+				let store = getStore();
 				fetch(process.env.BACKEND_URL + "api/products/make", {
 					method: "POST",
 					body: JSON.stringify(params),

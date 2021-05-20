@@ -10,11 +10,12 @@ import LOGO1 from "../../img/LOGO1.png";
 export const Navigation = () => {
 	const { store, actions } = useContext(Context);
 	const navStyles = {
-		marginLeft: "625px"
+		marginLeft: "1200px"
 	};
 
 	const linkColor = {
-		color: "orange"
+		color: "orange",
+		fontSize: "24px"
 	};
 
 	const linkColor1 = {

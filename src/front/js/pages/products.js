@@ -56,7 +56,7 @@ export const Products = props => {
 											<Card.Text>${props.product_cost}</Card.Text>
 											<Link to={`/singleProduct/${props.id}`}>
 												<Button
-													variant="danger"
+													variant="warning"
 													onClick={() =>
 														actions.getProductsByUpc(props.product_upc, history)
 													}>

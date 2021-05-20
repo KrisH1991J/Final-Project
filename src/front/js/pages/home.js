@@ -41,7 +41,7 @@ export const Home = props => {
 									<Form.Label>Password</Form.Label>
 									<Form.Control name="password" type="password" placeholder="Password" />
 								</Form.Group>
-								<Button variant="danger" type="submit">
+								<Button variant="warning" type="submit">
 									Login
 								</Button>
 							</Form>
@@ -70,7 +70,7 @@ export const Home = props => {
 									<Form.Label>Last Name</Form.Label>
 									<Form.Control placeholder="Last Name" name="last_name" />
 								</Form.Group>
-								<Button variant="danger" type="submit">
+								<Button variant="warning" type="submit">
 									Submit
 								</Button>
 							</Form>

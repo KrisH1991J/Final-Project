@@ -49,7 +49,11 @@ export const UserProducts = props => {
 										<Card.Title>{props.product.product_name}</Card.Title>
 										<Card.Text>${props.product.product_cost}</Card.Text>
 										<Link to={`/singleProduct/${props.id}`}>
-											<Button variant="danger">Go somewhere</Button>
+											<Button
+												variant="warning"
+												onClick={() => actions.getProductsByUpc(props.product_upc, history)}>
+												Go somewhere
+											</Button>
 										</Link>
 									</Card.Body>
 								</Card>

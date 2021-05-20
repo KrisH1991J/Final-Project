@@ -51,6 +51,7 @@ class Products(db.Model):
             "product_cost": self.product_cost,
             "product_image": self.product_image,
             "product_upc": self.product_upc,
+            "product_description": self.product_description,
             # do not serialize the password, its a security breach
         }
         

@@ -49,7 +49,7 @@ export const Profile = props => {
 							<div className="col-3">
 								<h6 className="text-muted">Name: </h6>
 							</div>
-							<div style={{ color: "red" }}>
+							<div style={{ color: "orange" }}>
 								{store.getCurrentUser.first_name} {store.getCurrentUser.last_name}
 							</div>
 						</div>
@@ -57,7 +57,7 @@ export const Profile = props => {
 							<div className="col-3">
 								<h6 className="text-muted">Email:</h6>
 							</div>
-							<div style={{ color: "red" }}>{store.getCurrentUser.email}</div>
+							<div style={{ color: "orange" }}>{store.getCurrentUser.email}</div>
 						</div>
 					</div>
 				</div>
