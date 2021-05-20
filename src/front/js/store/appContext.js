@@ -24,6 +24,8 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			state.actions.loadProducts();
 			state.actions.loadUsers();
+			state.actions.loadUserProducts();
+			state.actions.checkSession();
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

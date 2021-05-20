@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 import sys
+import os
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.schema import ForeignKeyConstraint, UniqueConstraint
@@ -38,6 +39,7 @@ class Products(db.Model):
     product_cost = db.Column(db.String(10), nullable=False)
     product_image = db.Column(db.String(250))
     product_upc = db.Column(db.String(12), unique=True, nullable=False)
+    product_description = db.Column(db.String(250))
 
     def __repr__(self):
         return '<Products %r>' % self.product_name
@@ -67,7 +69,7 @@ class User_Has_Products(db.Model):
         return {
             "id": self.id,
             "user" : self.user.serialize(),
-            "product" : self.product.serialize()
+            "product" : self.product.serialize(),
             # do not serialize the password, its a security breach
         }
 
