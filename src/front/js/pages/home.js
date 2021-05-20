@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import LOGOGIF2 from "../../img/LOGOGIF2 (1).gif";
 export const Home = props => {
 	const { store, actions } = useContext(Context);
 	let history = useHistory();
@@ -16,36 +16,20 @@ export const Home = props => {
 	return (
 		<>
 			<div className="row mb-5">
-				<div className="col">
-					<h1 className="text-center">MarketPulse</h1>
-				</div>
+				<div className="col" />
 			</div>
 			<div className="row">
 				<div className="col-md mb-5">
-					<h1 className="subtitle">
-						<div style={{ display: "inline-block" }}> Better</div>
-						<div className="relative-scroll-text" style={{ position: "relative", height: "100px" }}>
-							<div
-								className="vertical-scroll-text__container"
-								style={{ transitionDuration: "0.65s", top: "-84px" }}
-							/>{" "}
-							<div
-								className="header-text text-color-blue"
-								style={{ textAlign: "center", fontsize: "35px" }}>
-								{" "}
-								Results{" "}
-							</div>
-							<div
-								className="header-text text-color-blue"
-								style={{ textAlign: "right", fontsize: "35px" }}>
-								{" "}
-								Automation{" "}
-							</div>
-						</div>{" "}
-					</h1>
+					<img
+						src={LOGOGIF2}
+						style={{
+							width: "500px",
+							height: "300px"
+						}}
+					/>
 					<h4>Easily manage and grow a thriving e-commerce business with just one platform.</h4>
 				</div>
-				<div className="col-md">
+				<div className="formlogin">
 					<Tabs defaultActiveKey="login" id="log_reg_screen">
 						<Tab eventKey="login" title="Login">
 							<Form onSubmit={event => actions.loginUser(event, history)}>
@@ -92,16 +76,6 @@ export const Home = props => {
 							</Form>
 						</Tab>
 					</Tabs>
-				</div>
-			</div>
-			<div className="row mb-5">
-				<div className="col text-center">
-					<img
-						className="picture"
-						src="https://www.helium10.com/app/themes/helium10/assets/img/adtomic/adtomic_homepage-hero.svg"
-						width="400px"
-						height="500px"
-					/>
 				</div>
 			</div>
 		</>

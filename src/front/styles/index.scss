@@ -1,40 +1,84 @@
 /* 
     General Styles
 */
-.product-column {
-  float: left;
-  width: 50%;
-  padding: 1px;
- 
-}
+@import "~bootstrap/scss/bootstrap.scss";
+.Container-header {
 
-.prime {
-    float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px;
-}
-
-.product-detail-row {
- 
-  padding: 10px;
-
-
-}
-
-.calculator-title {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    align-items: flex-start;
 }
-.rank {
-    display: flex;
-    justify-content: center;
-    color: blue;
+.title {
+    
+
+    align-self: flex;
+    margin: 20px;
+}
+.prices { 
+    
+     align-self: center;
+     margin-left: auto;
+
 }
 
-.calculatorCard {
+.prime{
+    margin-top: 40px;
+    margin-left: 10px;
+    margin-right: auto;
+    
+}
+.Container-product {
+
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
+    
+    
+}
+
+.product-images { 
+    flex-grow: 1;
+
+    align-self: flex;
+    width: 500px;
+    height: 500px;
+}
+.calculator {
+    flex-grow: 1;
+    
+    align-self: flex;
+    margin-left: auto;
+    margin-right: auto;
    
 }
+.stats {
+    display: flex;
+    flex-direction: row;
+}
 
+.detail {
+    flex-grow: 1;
+}
+.description {
+    flex-grow: 1;
+}
+
+.Navbar {
+  background: linear-gradient(
+    90deg,
+    rgba(48, 16, 255, 1) 0%,
+    rgba(100, 115, 255, 1) 100%
+  );
+}
+
+.formlogin {
+
+  flex-grow: 1;
+  margin-top: 20px;
+}
+
+.makeproduct {
+  
+    display: flex;
+    justify-content: center;
+}

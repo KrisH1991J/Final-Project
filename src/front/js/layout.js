@@ -22,8 +22,12 @@ const Layout = () => {
 		<div className="container-fluid">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<div className="container">
-						<Navigation />
+					<Navigation />
+					<div
+						className="container"
+						style={{
+							paddingTop: "150px"
+						}}>
 						<Switch>
 							<Route exact path="/">
 								<Home />
@@ -44,6 +48,9 @@ const Layout = () => {
 							<Route exact path="/makeProduct">
 								<MakeProduct />
 							</Route>
+							{/* <Route exact path="/settings">
+								<Settings />
+							</Route> */}
 						</Switch>
 						<Footer />
 					</div>
