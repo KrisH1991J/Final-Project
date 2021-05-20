@@ -10,10 +10,11 @@ import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import getState from "../store/flux";
+import { useHistory } from "react-router-dom";
 
 export const Products = props => {
 	const { store, actions } = useContext(Context);
-
+	const history = useHistory();
 	const imgStyles = {
 		width: "327px",
 		height: "340px"
@@ -54,7 +55,13 @@ export const Products = props => {
 											<h5 className="card-title">{props.product_name}</h5>
 											<Card.Text>${props.product_cost}</Card.Text>
 											<Link to={`/singleProduct/${props.id}`}>
-												<Button variant="danger">Go somewhere</Button>
+												<Button
+													variant="danger"
+													onClick={() =>
+														actions.getProductsByUpc(props.product_upc, history)
+													}>
+													Go somewhere
+												</Button>
 											</Link>
 										</div>
 									</div>

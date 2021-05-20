@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import FormControl from "react-bootstrap/FormControl";
 import { Context } from "../store/appContext";
-
+import LOGO1 from "../../img/LOGO1.png";
 export const Navigation = () => {
 	const { store, actions } = useContext(Context);
 	const navStyles = {
@@ -14,18 +14,33 @@ export const Navigation = () => {
 	};
 
 	const linkColor = {
-		color: "yellow"
+		color: "orange"
 	};
 
 	const linkColor1 = {
-		color: "red"
+		color: "orange"
 	};
 
 	return (
 		<>
 			{store.isLoggedIn && (
-				<Navbar bg="dark" variant="dark">
-					<Navbar.Brand href="#home">MarketPulse</Navbar.Brand>
+				<Navbar
+					style={{
+						borderBottom: "0.50px solid black",
+						position: "fixed",
+						zIndex: "100",
+						background: "white",
+						width: "100%"
+					}}>
+					<Navbar.Brand href="#home">
+						<img
+							src={LOGO1}
+							style={{
+								width: "120px",
+								height: "120px"
+							}}
+						/>{" "}
+					</Navbar.Brand>
 					<Nav className="mr-auto" />
 					<Nav className="mr-auto">
 						<Nav.Link style={navStyles}>
@@ -46,7 +61,7 @@ export const Navigation = () => {
 							</NavDropdown.Item>
 							<NavDropdown.Divider />
 							<NavDropdown.Item href="/" style={linkColor1} onClick={() => actions.logoutUser()}>
-								Logout
+								{store.isLoggedIn ? "Logout" : "login"}
 							</NavDropdown.Item>
 						</NavDropdown>
 					</Nav>

@@ -22,15 +22,15 @@ export const UserProducts = props => {
 		marginTop: "20px"
 	};
 
-	const rowStyle = {
-		paddingRight: "10px",
-		paddingLeft: "5px"
-	};
-
 	const headerStyle = {
 		marginLeft: "325px",
 		marginTop: "10px",
 		fontSize: "24px"
+	};
+
+	const rowStyle = {
+		paddingRight: "10px",
+		paddingLeft: "5px"
 	};
 
 	return (

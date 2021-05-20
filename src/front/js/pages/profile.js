@@ -27,7 +27,7 @@ export const Profile = props => {
 					<div className="row g-5">
 						<Col>
 							<Image
-								src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*"
+								src="https://image.winudf.com/v2/image1/b3JnLm1lbW9qaXMuYW5kcm9pZF9pY29uXzE1NTA3OTkzNThfMDg4/icon.png?w=&fakeurl=1"
 								roundedCircle
 								style={picStyle}
 							/>
@@ -37,7 +37,7 @@ export const Profile = props => {
 						<div className="username">
 							<h1 style={usernameStyle}>{store.getCurrentUser.username}</h1>
 							<div className="review">
-								<h2 className="review-icon" style={{ color: "yellow" }}>
+								<h2 className="review-icon" style={{ color: "orange" }}>
 									<AiFillStar />
 									<AiFillStar />
 									<AiFillStar />

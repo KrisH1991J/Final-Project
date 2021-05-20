@@ -11,16 +11,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 
 		actions: {
-			getProductsByUpc: (product_upc, history) => {
-				fetch(`${process.env.KEEPA_API}&domain=1&code=${product_upc}&history=1&stats=1`)
+			getProductsByUpc: async (product_upc, history = undefined) => {
+				let availability;
+				await fetch(`${process.env.KEEPA_API}&domain=1&code=${product_upc}&history=1&stats=1`)
 					.then(res => res.json())
 					.then(data => {
 						setStore({ amazonData: [data] });
-						history.push("/singleProduct");
+						availability = data.products && data.products[0] ? true : false;
+
+						// history && history.push("/singleProduct");
 					})
 					.catch(error => console.log(error));
+				return availability;
 			},
-
 			getProducts: () => {
 				fetch(process.env.BACKEND_URL + "api/products")
 					.then(res => res.json())
@@ -114,18 +117,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				if (store.token !== null) setStore({ isLoggedIn: true });
 				if (store.token === null) setStore({ isLoggedIn: false });
 			},
-			makeProduct: (event, history) => {
-				event.preventDefault();
-				let actions = getActions();
-				let store = getStore();
-				const formElements = event.target.elements;
-				let params = {};
-
-				Array.prototype.slice.call(formElements, 0).map(el => {
-					if (el.type !== "submit") {
-						params[el.name] = el.value;
-					}
-				});
+			makeProduct: (params, history) => {
 				fetch(process.env.BACKEND_URL + "api/products/make", {
 					method: "POST",
 					body: JSON.stringify(params),
